@@ -1,0 +1,116 @@
+<div class="exx-entrance">
+    <%-include("canvas.html")%>
+  <div class="exx-entrance-main">
+        <div class="exx-entrance-head">
+            <h3><%= LANG('登录验证') %></h3>
+        </div>
+<div id="logAuth">
+      <div class="exx-entrance-body" id="logBox">
+          <div class="form-box" id="vipLogin">
+              <p style="font-size: 12px; color: #f00;margin-bottom: 30px; text-align: center;"><%= LANG('根据您的登录设置，本次登录需要验证') %></p>
+          <div class="form-group" v-if="loginUser.loginEmailAuth == 1">
+            <div class="form-control">
+              <input v-model="emailCode" autocomplete="off" placeholder="<%= LANG('邮件验证码') %>" type="text" v-on:blur="handleCheckLength($event)" v-on:focus="clearInputError($event)">
+                  <send-code class="text-nowrap" :code-type="23" :user-name="loginUser.userKey" :user-key="loginUser.userKey" />
+            </div>
+          </div>
+
+          <div class="form-group" v-if="loginUser.loginMobileAuth == 1">
+            <div class="form-control">
+              <input v-model="dynamicCode" placeholder="<%= LANG('短信验证码') %>" autocomplete="off" type="text" v-on:blur="handleCheckLength($event)" v-on:focus="clearInputError($event)">
+                  <send-code class="text-nowrap" :code-type="24" :user-name="loginUser.userKey" :user-key="loginUser.userKey" />
+            </div>
+          </div>
+
+          <div class="form-group" v-if="loginUser.loginGoogleAuth == 1">
+            <div class="form-control">
+              <input v-model="googleCode" placeholder="<%= LANG('谷歌验证码') %>" type="text" v-on:blur="handleCheckLength($event)" v-on:focus="clearInputError($event)">
+            </div>
+          </div>
+          <div class="form-button">
+              <button id="submitBtn" type="button" v-on:click="handleSubmit" class="button"><span><%= LANG('立即验证') %></span></button></div>
+      </div>
+  </div>
+  </div>
+  </div>
+</div>
+<%-include("../component/send_code/index.html")%>
+<script>
+    function loginSuccessUi(redirect) {
+        $("#logBox").fadeOut();
+        swal({
+            title: "<%= LANG('登录成功') %>",
+            text: "<%= LANG('即将跳转到账户中心') %>",
+            icon: "success",
+            buttons: ["<%= LANG('立即跳转') %>!", false],
+            dangerMode: false,
+        }).then(function (willDelete) {
+            window.location.href = redirect;
+        });
+        window.setTimeout(function () {
+            window.location.href = redirect;
+        }, 3000);
+    }
+
+    require(['vue', 'common/methods', 'common/juabox'], function (Vue, Methods, JuaBox) {
+        var logAuth = new Vue({
+            el: '#logAuth',
+            data: function () {
+                return {
+                    userName: Methods.getCookie(ENV + 'uname'),
+                    uon: Methods.getCookie(ENV + 'uon'),
+                    loginUser: Methods.getNoLoginUserInfo(),
+                    dynamicCode: '',
+                    emailCode: '',
+                    googleCode: ''
+                }
+            },
+            methods: {
+                handleCheckLength: function (e) {
+                    var target = e.target || e.currentTarget || e.srcElement;
+                    if ($(target).val().length < 4) {
+                        Methods.showLineError(target, "<%= LANG('验证码格式不正确') %>")
+                    } else {
+                        Methods.showLineError(target, "")
+                    }
+                },
+                clearInputError : function (e) {
+                    var target = e.target || e.currentTarget || e.srcElement;
+                    Methods.showLineError(target, "")
+                },
+                bindEnter : function () {
+                    var _this = this;
+                    document.onkeydown = function(e){
+                        var ev = document.all ? window.event : e;
+                        if(ev.keyCode==13) {
+                            _this.handleSubmit()
+                            return false;
+                        }
+                    }
+                },
+                handleSubmit: function () {
+                    var data = {
+                        userKey: this.loginUser.userKey,
+                        emailCode: this.emailCode,
+                        dynamicCode: this.dynamicCode,
+                        googleCode: this.googleCode
+                    }
+                    Methods.ajax({
+                        type: "Get",
+                        url: DOMAIN_MAIN + API_PREFIX + 'loginAuth',
+                        data: data,
+                        success: function (res) {
+                            Methods.setLocalUserInfo(res.datas.userInfo);
+                            loginSuccessUi('/u')
+                            //window.location.href = '/u';
+                        }
+                    });
+                }
+            },
+            mounted : function () {
+                Methods.checkMobileStyle();
+                this.bindEnter();
+            }
+        })
+    });
+</script>

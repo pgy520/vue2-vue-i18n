@@ -1,0 +1,68 @@
+<div class="section section1">
+    <div class="section-bg" id="page1canvasWrap"></div>
+    <div class="container">
+        <div class="home-text">
+            <h2 class="roomIn animated wow fadeInUp" data-wow-delay=".5s" data-text="UnitedBitcoin"><%- LANG('UnitedBitcoin') %></h2>
+            <p class="subtitle wow fadeInUp" data-wow-delay=".9s"><%- LANG('Linking values') %> & <%- LANG('Serving the world!') %></p>
+        </div>
+            <div class="btnlist wow fadeInUp" data-wow-delay=".9s">
+                <a href="/news/detail?column=1&id=288" target="_blank" role="button" class="ub-button department_send"><span><%- LANG('Community Airdrop') %></span></a>
+                <a href="/support/whitepaper" target="_blank" role="button" class="ub-button"><span><%- LANG('White Paper') %></span></a>
+            </div>
+        <div class="videos-title wow fadeInUp" data-wow-delay=".9s">UnitedBitcoin Documentary</div>
+        <div class="videos wow fadeInUp" data-wow-delay=".9s">
+            <div class="item" role="button"><img src="/src/images/videos/video1.png" alt="UnitedBitcoin Documentary - Episode 1"><p>Episode 1</p></div>
+            <div class="item" role="button"><img src="/src/images/videos/video2.png" alt="UnitedBitcoin Documentary - Episode 2"><p>Episode 2</p></div>
+            <div class="item" role="button"><img src="/src/images/videos/video3.png" alt="UnitedBitcoin Documentary - Episode 3"><p>Episode 3</p></div>
+
+        </div>
+    </div>
+    <div class="videos-modal">
+        <div class="videos-link">
+            <div class="close" role="button"></div>
+            <iframe width="854" height="480" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe width="854" height="480" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe width="854" height="480" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <!--<iframe width="854" height="480" src="https://www.youtube.com/embed/k3iMVpMbSKc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+            <!--<iframe width="854" height="480" src="https://www.youtube.com/embed/1-RXri70ens" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+            <!--<iframe width="854" height="480" src="https://www.youtube.com/embed/9fL0o32ShJk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        console.log('lan',LAN)
+        if(LAN=='cn')
+        {
+            $('.videos').remove()
+            $('.videos-title').remove()
+            $('.videos-modal').remove()
+            return;
+        }
+        var iframeArr=[
+            "https://www.youtube.com/embed/k3iMVpMbSKc",
+            "https://www.youtube.com/embed/1-RXri70ens",
+            "https://www.youtube.com/embed/9fL0o32ShJk"
+        ]
+        $('.item').click(function(){
+            console.log($(this).index())
+            $('.videos-modal').addClass('open')
+            for(var i=0;i<$('iframe').length;i++)
+            {
+                $('iframe').eq(i).removeClass('video-on')
+                $('iframe').eq(i).attr('src','')
+            }
+            $('iframe').eq($(this).index()).attr('src',iframeArr[$(this).index()])
+            $('iframe').eq($(this).index()).addClass('video-on')
+        })
+    //    关闭播放
+        $('.close').click(function(){
+            $('.videos-modal').removeClass('open')
+            for(var i=0;i<$('iframe').length;i++)
+            {
+                $('iframe').eq(i).attr('src','')
+            }
+            // $('iframe').remove()
+        })
+    })
+</script>

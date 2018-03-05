@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="<%= LAN %>">
+<head>
+    <%-include("include/headInit.html")%>
+    <%-include("include/headMeta.html")%>
+</head>
+<body>
+    <%-include("include/loading.html")%>
+    <%-include("include/menuMain.html")%>
+    <div class="site-wrapper">
+    <% try{ %>
+        <%-include(templateMain)%>
+    <% }catch(err){ %>
+        <div class="alert alert-danger" role="alert">error:template file not find.</div>
+    <% } %>
+    </div>
+    <%-include("include/footInit.html")%>
+</body>
+</html>

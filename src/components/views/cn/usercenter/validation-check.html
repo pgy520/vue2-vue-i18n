@@ -1,0 +1,216 @@
+<style>
+    @import "/src/styles/iview.css";
+    @import "/src/styles/Bomb.css";
+
+    #validate_check h1 {
+        margin: 20px 0;
+    }
+
+
+    #validate_check p {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        /*align-items:center;*/
+        width: 96%;
+        max-width: 700px;
+        font-size: 14px;
+        color: #333;
+        font-style: normal;
+        margin: 30px auto;
+    }
+
+    #validate_check p.flex_end {
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+    }
+
+    #validate_check p.flex_end>a {
+        margin-right: 20px;
+        color: #00ccff;
+    }
+
+    #validate_check p>span {
+        display: inline-block;
+        text-align: left;
+        width: 150px;
+    }
+
+    #validate_check p>span+span {
+        width: unset;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+    }
+
+    #validate_check .button a {
+        padding: 15px 30px;
+    }
+
+    #validate_check .button+.button {
+        margin-left: 10px;
+    }
+
+    @media screen and (max-width: 768px) {
+        #validate_check h1 {
+            font-size: 22px;
+            margin: 0;
+        }
+        #validate_check p {
+            font-size: 12px;
+            margin: 20px auto;
+        }
+        #validate_check p>span {
+            display: inline-block;
+            text-align: left;
+            width: 90px;
+        }
+        #validate_check p>span+span {
+            width: unset;
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+        #validate_check .button a {
+            padding: 10px;
+        }
+        .user-center .button a {
+            font-size: 12px;
+        }
+    }
+
+    @media screen and (max-width:320px) {
+        .user-center {
+            padding: 50px 0;
+        }
+    }
+</style>
+<div class="user-center" id="validate_check">
+    <div class="container">
+        <h1>
+            <%- LANG('Validate your address') %>
+        </h1>
+        <p>
+            <span>
+                <%- LANG('地址')%>:</span>
+            <span>{{address}}</span>
+        </p>
+        <p>
+            <span>
+                <%- LANG('消息')%>:</span>
+            <span>{{msginfo}}</span>
+        </p>
+        <p>
+            <span>
+                <%- LANG('签名')%>:</span>
+            <span>
+                <i-input v-model="vertical_sign" type="textarea" :rows="5" placeholder="<%- LANG('请输入你的签名')%>"></i-input>
+            </span>
+        </p>
+        <span class="button">
+            <a href="javascript:;" role="button" @click="verticalcheck">
+                <%- LANG('地址验证') %>
+            </a>
+        </span>
+        <p class="flex_end">
+            <a :href="signinfo[LAN]" target="_blank" role="button">
+                <%- LANG('如何签名?')%>
+            </a>
+            <!-- <a :href="withdrawninfo[LAN]" target="_blank" role="button">
+                <%- LANG('提币手册')%>
+            </a> -->
+        </p>
+    </div>
+</div>
+<script>
+    var app = new Vue({
+        el: '#validate_check',
+        data() {
+            this.$Message.config({
+                top: 180,
+                duration: 3
+            });
+            return {
+                address: '',
+                btkind: '',
+                msginfo: '',
+                vertical_sign: '',
+                signinfo: {
+                    'en': '/news/detail?column=1&id=325',
+                    'cn': '/news/detail?column=1&id=324',
+                    'hk': '/news/detail?column=1&id=324',
+                    'kr': '/news/detail?column=1&id=325',
+                    'jp': '/news/detail?column=1&id=325'
+                },
+                withdrawninfo: {
+                    'en': '/news/detail?column=1&id=322',
+                    'cn': '/news/detail?column=1&id=323',
+                    'hk': '/news/detail?column=1&id=323',
+                    'kr': '/news/detail?column=1&id=322',
+                    'jp': '/news/detail?column=1&id=322'
+                }
+            }
+
+        },
+        methods: {
+            //地址验证
+            verticalcheck:function() {
+                if (this.vertical_sign.trim() === '') {
+                    this.$Message.warning("<%- LANG('签名不能为空')%>")
+                    return;
+                }
+                var _this=this;
+                Methods.ajax({
+                    type: 'POST',
+                    data: {
+                        "sign": this.vertical_sign,
+                        "address": this.address,
+                        "msg": this.msginfo.toString(),
+                        "currencyType": this.btid
+                    },
+                    url: DOMAIN_MAIN + '/portals/currency/verifysignmessage',
+                    success: function(res){
+                        if (!res.isVerify) {
+                            _this.$Message.error("<%- LANG('签名错误')%>")
+                            return;
+                        }
+                        _this.$Message.success({
+                            content: "<%- LANG('签名验证成功')%>",
+                            duration: 1,
+                            onClose: function(){
+                                window.location = '/u/othersConfirm'
+                            }
+                        })
+                    },
+                    error: function(err){
+                        _this.$Message.error(err.errorText)
+                    }
+                });
+
+
+            },
+
+        },
+        created: function () {
+            this.address = window.sessionStorage.getItem('btadd') ? window.sessionStorage.getItem('btadd') :
+                ''
+            this.btid = window.sessionStorage.getItem('btid') ? window.sessionStorage.getItem('btid') : ''
+            this.msginfo = window.sessionStorage.getItem('randomBtc') ? window.sessionStorage.getItem(
+                'randomBtc') : ''
+        },
+
+        mounted: function () {
+
+        },
+        beforeCreate: function () {
+            if (!window.sessionStorage.getItem("mail")) {
+                window.location = "/user/login";
+            }
+
+        },
+    })
+</script>

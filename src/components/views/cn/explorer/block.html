@@ -1,0 +1,74 @@
+<%-include("common.html")%>
+<div class="ub-explorer" id="ub-explorer">
+    <div class="container" :class="{'loading loading-light-bg' : !blockInfo}">
+        <h3 class="bk-leftLine"><%- LANG('区块') %> #{{blockInfo.height}}</h3>
+        <table class="table table-striped table-bordered" v-if="blockInfo">
+            <tbody>
+            <tr>
+                <td><%- LANG('区块号') %></td>
+                <td><a :href="getBlockUrl(blockInfo.height)">{{blockInfo.height}}</a> <span style="color:#15bf81">(<%- LANG('主链') %>)</span></td>
+            </tr>
+            <tr>
+                <td><%- LANG('哈希值') %></td>
+                <td><a class="hash-link" :href="getBlockUrl(blockInfo.hash)">{{blockInfo.hash}}</a>
+                </td>
+            </tr>
+            <tr>
+                <td><%- LANG('上一区块') %></td>
+                <td><a class="hash-link" :href="getBlockUrl(blockInfo.previousblockhash)">{{blockInfo.previousblockhash}}</a>
+                </td>
+            </tr>
+            <tr>
+                <td><%- LANG('接收时间') %></td>
+                <td>{{blockInfo.showTime}}</td>
+            </tr>
+            <tr>
+                <td><%- LANG('播报方') %></td>
+                <td><a target="_blank" href="">{{blockInfo.poolInfo.poolName}}</a></td>
+            </tr>
+            <tr>
+                <td><%- LANG('难度系数') %></td>
+                <td>{{blockInfo.difficulty}}</td>
+            </tr>
+            <tr>
+                <td><%- LANG('计算目标') %></td>
+                <td>{{blockInfo.bits}}</td>
+            </tr>
+            <tr>
+                <td><%- LANG('交易数') %></td>
+                <td>{{blockInfo.tx.length}}</td>
+            </tr>
+            <tr>
+                <td><%- LANG('数据量') %></td>
+                <td>{{blockInfo.size}} Bytes</td>
+            </tr>
+            <tr>
+                <td><%- LANG('版本') %></td>
+                <td>{{blockInfo.version}}</td>
+            </tr>
+            <tr>
+                <td><%- LANG('杂凑随机数') %></td>
+                <td>{{blockInfo.nonce}}</td>
+            </tr>
+            <tr>
+                <td><%- LANG('梅克莱根') %></td>
+                <td><a class="hash-link">{{blockInfo.merkleroot}}</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <h3 class="bk-leftLine" style="margin-top: 50px;"><%- LANG('交易') %>
+            <small><%- LANG('此区块中包含的交易') %></small>
+        </h3>
+
+        <template v-for="tx in blockInfo.txs" v-if="blockInfo">
+            <tx-info :tx="tx" :hash="blockInfo.hash"></tx-info>
+        </template>
+
+        <div id="moreBtcDiv">
+            <button v-if="loading" type="button" class="btn btn-primary btn-lg" style="width:100%" disabled="disabled">Loading...</button>
+            <button v-if="!loading && pageCount < pageSize" type="button" class="btn btn-primary btn-lg" style="width:100%" disabled="disabled">No More</button>
+            <button v-if="!loading && pageCount >= pageSize" @click="getBlockInfo" type="button" class="btn btn-primary btn-lg" style="width:100%">Load More</button>
+        </div>
+    </div>
+</div>
+<%-include("app.explorer.html", {page : 'block'})%>

@@ -1,0 +1,30 @@
+<div class="ub-banner" style="background: url('/src/images/home/banner3.jpg') no-repeat center center / cover;">
+    <h2><%- LANG('Explorer') %></h2>
+    <div class="ub-explorerSearch">
+        <input type="text" placeholder="Address/Block/Txid" id="ex-keyword"><button type="button" onclick="app_explorer.doSearch($('#ex-keyword').val())">SEARCH</button>
+    </div>
+</div>
+
+<link href="/lib/bootstrap/dist/css/ub-bootstrap.min.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+
+
+
+
+
+    #txsDiv td .btn { width:100%;}
+    .hash-link { float: left; overflow: hidden; text-overflow: ellipsis;}
+    .break-word {word-break:break-all; word-wrap:break-word;}
+    @media (max-width: 969px){
+        .hash-link {width: 200px;}
+    }
+    @media (max-width: 639px){
+        .hash-link {width: 120px;}
+    }
+    @media (min-width: 769px){
+        .bk-sosuoBlock { padding-top:13px;}
+    }
+    #moreBtcDiv { padding-bottom:15px;}
+
+</style>
+<%-include("app.txinfo.html")%>

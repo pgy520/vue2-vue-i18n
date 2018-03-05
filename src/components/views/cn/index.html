@@ -1,0 +1,75 @@
+<script type="text/javascript" src="/lib/others/three.min.js"></script>
+<script type="text/javascript" src="/lib/others/three.min2.js"></script>
+<script type="text/javascript" src="/lib/others/perlin.js"></script>
+
+<script type="text/javascript" src="/lib/owl/owl.carousel.min.js"></script>
+<link href="/lib/owl/owl.carousel.css" rel="stylesheet" type="text/css">
+<link href="/lib/owl/owl.theme.default.min.css" rel="stylesheet" type="text/css">
+
+<script src="/lib/others/scrolloverflow.min.js" charset="utf-8" type="text/javascript"></script>
+<script src="/lib/others/jquery.fullpage.min.js" charset="utf-8" type="text/javascript"></script>
+<script src="/lib/wow/wow.min2.js" charset="utf-8" type="text/javascript"></script>
+<link href="<%= STATIC %>/styles/animate.css" rel="stylesheet" type="text/css">
+<link href="<%= STATIC %>/styles/easebg.css?<%= VERSION %>" rel="stylesheet" type="text/css">
+<link href="<%= STATIC %>/styles/assembly.css?<%= VERSION %>" rel="stylesheet" type="text/css">
+<script src="/lib/others/jquery.stellar.min.js" charset="utf-8" type="text/javascript"></script>
+<script src="/lib/others/waypoints.js" charset="utf-8" type="text/javascript"></script>
+<script src="<%= STATIC %>/scripts/homeBgInit.js?<%= VERSION %>" charset="utf-8" type="text/javascript"></script>
+<style>
+    .header{
+        background: transparent;
+    }
+    .header:hover{
+        background: #1d2025;
+    }
+</style>
+
+<script>
+    var notIpadpro=/iPad/i.test(navigator.userAgent)&&($(window).width()<1024)
+    if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)||notIpadpro) {
+        window.location.href = "/mobileindex";
+    }
+</script>
+
+<div class="mod-bg-layer-1">
+    <div class="inner" data-stellar-background-ratio="0.15"></div>
+</div>
+<div class="mod-bg-layer-2">
+    <div class="inner" data-stellar-background-ratio="0.6"></div>
+</div>
+<div class="mod-star-list">
+    <div class="inner"></div>
+</div>
+
+<div id="ub-wrapper">
+    <%-include("home/page1.html")%>
+    <%-include("home/page2.html")%>
+    <%-include("home/page3.html")%>
+    <%-include("home/page4.html")%>
+    <%-include("home/page5.html")%>
+    <%-include("home/page6.html")%>
+    <%-include("home/page7.html")%>
+    <%-include("home/page8.html")%>
+    <%-include("home/page9.html")%>
+    <%-include("home/page10.html")%>
+    <%-include("home/page11.html")%>
+    <%-include("home/page12.html")%>
+</div>
+
+<%-include("home/app.home.html")%>
+
+<script>
+    $(document).ready(function(){
+        if(LAN=='cn')
+        {
+            $('.getubtc').attr('href','https://www.ub.com/news/detail?column=1&id=281')
+            $('.department_send').attr('href','https://www.ub.com/news/detail?column=1&id=294')
+        }
+        else if(LAN=='en')
+        {
+            $('.getubtc').attr('href','https://www.ub.com/news/detail?column=1&id=280')
+            $('.department_send').attr('href','https://www.ub.com/news/detail?column=1&id=318')
+        }
+
+    })
+</script>

@@ -1,0 +1,61 @@
+<script>
+    var app_otc = new Vue({
+        el: '#ub-otc',
+        data: function () {
+            return {
+                inputPrice:null,
+                rmbPrice:0,
+                loading:false
+            }
+        },
+        methods : {
+            getNewPrice : function () {
+                var _this = this;
+                if(_this.loading){
+                    return false;
+                }
+                _this.loading = true;
+                Methods.ubAjax({
+                    type: 'GET',
+                    url: DOMAIN_MAIN + '/portals/blockexplore/infos',
+                    success: function(res) {
+                        _this.rmbPrice = res.result && res.result.price || _this.rmbPrice;
+                        _this.loading = false;
+                    },
+                    error : function () {
+                        _this.loading = false;
+                    }
+                });
+            }
+        },
+        created : function () {
+
+        },
+        mounted : function () {
+            var _this = this;
+            _this.getNewPrice()
+            setInterval(function () {
+                _this.getNewPrice()
+            }, 10000)
+        },
+        computed : {
+            usdtPrice : function(){
+                return Methods.fixNumber(parseFloat(this.rmbPrice)/6.63, 2)
+            },
+            ubtcPrice : function(){
+                if(!this.rmbPrice || !this.inputPrice || isNaN(this.inputPrice)){
+                    return 0;
+                }
+                return Methods.fixNumber(parseFloat(this.inputPrice) / parseFloat(this.rmbPrice), 2);
+            }
+        },
+        watch : {
+            inputPrice : function (val) {
+                if(val < 1)
+                    return this.inputPrice = 1
+                if(val > 3000000)
+                    return this.inputPrice = 3000000
+            }
+        }
+    })
+</script>

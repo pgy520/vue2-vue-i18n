@@ -1,0 +1,39 @@
+<style>
+    @media screen and (max-width: 768px){
+        .user-center h1{
+            font-size:20px;
+        }
+        .user-center .title {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .choose-confirm{
+            margin-top:30px;
+        }
+        .choose-confirm a {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+    }
+</style>
+<div class="user-center">
+    <div class="container">
+        <h1><%- LANG('比特币(BTC)用户逾期领取UBTC申请') %></h1>
+        <div class="title"><%- LANG('请确认您于区块高度498777持有比特币') %></div>
+        <div class="choose-confirm">
+                <a href="claims" role="button" class="yes"><%- LANG('是') %></a>
+                <a href="confirmno" role="button"><%- LANG('否') %></a>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $(document).ready(function(){
+                if(!window.sessionStorage.getItem("mail"))
+                {
+                    window.location="/user/login";
+                }
+        })
+    })
+</script>

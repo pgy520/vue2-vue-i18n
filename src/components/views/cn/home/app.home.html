@@ -1,0 +1,343 @@
+<script>
+    var app_home = new Vue({
+        el: '#ub-wrapper',
+        data: function () {
+            return {
+                openTime : ['0','0','0','0'],
+                openStatus : false,
+                startTime : '',
+                pageInit : [],
+                newsList : '',
+                processScroll : ''
+            }
+        },
+        methods : {
+            fullPageInit : function (callback) {
+                var _this = this;
+                try{
+                    var initArray = [
+                        null,
+                        page1BgInit,
+                        page2BgInit,
+                        page3BgInit,
+                        page4BgInit,
+                        page5BgInit,
+                        null,
+                        page7BgInit
+                    ];
+                    var destroyArray = [
+                        null,
+                        page1BgDestroy,
+                        page2BgDestroy,
+                        page3BgDestroy,
+                        page4BgDestroy,
+                        page5BgDestroy,
+                        null,
+                        page7BgDestroy
+                    ];
+                }catch(err){
+                    console.log('low kernel version');
+                }
+
+                $('#ub-wrapper').fullpage({
+                    anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7', 'page8', 'page9','page10','page11','page12','page13'],
+                    //navigationTooltips: ['fullPage.js', 'Powerful', 'Amazing', 'Simple'],
+                    navigation: true,
+                    navigationColor : "#ffa25b",
+                    scrollBar: true,
+                    css3: true,
+                    easingcss3: 'cubic-bezier(0.86,0,0.07,1)',
+                    scrollingSpeed: 700,
+                    //autoScrolling : false,
+                    //scrollOverflow : true,
+                    verticalCentered: false,
+                    afterRender : function () {
+                        callback && callback();
+                    },
+                    afterLoad : function(anchorLink, index){
+                        try{
+                            if(!_this.pageInit[index]){
+                                if(initArray[index]){
+                                    //console.log('init', index);
+                                    destroyArray[index](true);
+                                    initArray[index]();
+                                }
+                                _this.pageInit[index] = true;
+                            }else{
+                                if(destroyArray[index]){
+                                    destroyArray[index](true);
+                                }
+                            }
+                        }catch(err){}
+
+                        if(index > 13){
+                            //$('.mod-bg-layer-1, .mod-bg-layer-2').css('height','auto');
+                            $.fn.fullpage.setAutoScrolling(false);
+                            //$.fn.fullpage.destroy();
+                            //if(Methods.isMobile()){
+                                //$(".site-wrapper, #ub-wrapper").css('height','auto');
+                            //}
+                        }else{
+                            //_this.easeBgInit();
+                            $.fn.fullpage.setAutoScrolling(true);
+                            //$.fn.fullpage.reBuild();
+                            //$(".site-wrapper, #ub-wrapper").css('height','100%');
+                        }
+                        if(index == 14){
+                            _this.initScroll();
+                        }
+                        $(".ub-progress2").on({
+                            "touchstart" : function () {
+                                $.fn.fullpage.setAutoScrolling(false);
+                            },
+                            "touchend" : function () {
+                                $.fn.fullpage.setAutoScrolling(true);
+                            }
+                        })
+                    },
+                    onLeave : function (index,nextIndex,direction) {
+                        try{
+                            if(destroyArray[index]){
+                                setTimeout(function () {
+                                    destroyArray[index](false);
+                                },200)
+                            }
+                        }catch(err){}
+
+                    }
+                });
+            },
+            teamCarouselInit : function() {
+                if ($('.owl-team').length) {
+                    $('.owl-team').owlCarousel({
+                        loop: true,
+                        margin: 0,
+                        nav: false,
+                        dots: true,
+                        autoWidth: true,
+                        navText: [
+                            '<i class="fa fa-angle-left"></i>',
+                            '<i class="fa fa-angle-right"></i>'
+                        ],
+                        autoplay:false,
+                        autoplayTimeout:3000,
+                        autoplayHoverPause:true,
+                        responsive: {
+                            0:{
+                                items:1
+                            },
+                            480:{
+                                items:2
+                            },
+                            600:{
+                                items:3
+                            },
+                            1000:{
+                                items:3
+                            }
+                        }
+                    });
+                }
+            },
+            easeBgInit : function (init) {
+                var section = $('#ub-wrapper .section');
+                var sHeight = 0;
+                for(var i = 0, ilen = section.length; i < ilen; i++){
+                    sHeight += section.eq(i).height();
+                }
+                $('.mod-bg-layer-1, .mod-bg-layer-2').height(sHeight);
+                if(init){
+                    $(window).stellar({
+                        horizontalScrolling: false
+                    });
+                }
+            },
+            starBgInit : function () {
+                var starListBox = $('.mod-star-list');
+                var sectionBox = $('#ub-wrapper .section');
+                starListBox.height(sectionBox.eq(0).height() * sectionBox.length);
+                $(window).on('resize', function(){
+                    starListBox.height(sectionBox.eq(0).height() * sectionBox.length);
+                });
+
+                var starListInner = starListBox.find('.inner');
+                var meteorSeed = 20;
+                var meteorHTML = '<div class="meteor"><div class="box"></div></div>';
+                var starSeed = 20;
+                var starHTML = '<div class="star"><div class="box"></div></div>'
+                var starListHeight = starListBox.height();
+                var starListWidth = starListBox.width();
+
+                for(var i=0; i<starSeed; i++){
+                    var starEl = $(starHTML);
+                    var scaleRandom = Math.random() * 1.2 + 0.3;
+                    starEl.css({
+                        '-webkit-transform': 'scale(' + scaleRandom + ')',
+                        '-moz-transform': 'scale(' + scaleRandom + ')',
+                        'transform': 'scale(' + scaleRandom + ')',
+                        'top': Math.random() * starListHeight + 'px',
+                        'left': Math.random() * starListWidth + 'px'
+                    });
+                    starEl.find('.box').css({
+                        '-webkit-animation-delay': Math.random() * 2 +'s',
+                        '-moz-animation-delay': Math.random() * 2 +'s',
+                        'animation-delay': Math.random() * 2 +'s',
+                        '-webkit-animation-duration': Math.random() * 1 + 1 +'s',
+                        '-moz-animation-duration': Math.random() * 1 + 1 +'s',
+                        'animation-duration': Math.random() * 1 + 1 +'s'
+                    });
+                    starEl.appendTo(starListInner).waypoint(function(direction) {
+                        $(this).find('.box').addClass('action');
+                    }, {
+                        offset: '100%',
+                        triggerOnce: true
+                    });
+                }
+
+                for(var i=0; i<meteorSeed; i++){
+                    var meteorEl = $(meteorHTML);
+                    var scaleRandom = Math.random() * 1.2 + 0.3;
+                    var rotateRandom = Math.random() * 10 - 5 + 'deg';
+                    meteorEl.css({
+                        '-webkit-transform': 'scale(' + scaleRandom + ') rotate(' + rotateRandom + ')',
+                        '-moz-transform': 'scale(' + scaleRandom + ') rotate(' + rotateRandom + ')',
+                        'transform': 'scale(' + scaleRandom + ') rotate(' + rotateRandom + ')',
+                        'top': Math.random() * starListHeight + 'px',
+                        'left': Math.random() * starListWidth + 'px'
+                    });
+                    meteorEl.find('.box').css({
+                        '-webkit-animation-delay': Math.random() * 10 +'s',
+                        '-moz-animation-delay': Math.random() * 10 +'s',
+                        'animation-delay': Math.random() * 10 +'s',
+                        '-webkit-animation-duration': Math.random() * 2 + 3 +'s',
+                        '-moz-animation-duration': Math.random() * 2 + 3 +'s',
+                        'animation-duration': Math.random() * 2 + 3 +'s'
+                    });
+                    meteorEl.appendTo(starListInner).waypoint(function(direction) {
+                        $(this).find('.box').addClass('action');
+                    }, {
+                        offset: '100%',
+                        triggerOnce: true
+                    });
+                }
+
+            },
+            getServerTime: function (callback) {
+                var _this = this;
+                $.getJSON('/getServerTime', function (res) {
+                    callback && callback(res.timestamp);
+                });
+            },
+            countOpenTime : function (totalTime) {
+                var _this = this;
+                var totalTime = totalTime;
+                var consoles = false;
+                var timedown = function () {
+                    var days=Math.floor(totalTime/(24*3600*1000))
+                    var leave1=totalTime%(24*3600*1000);
+                    var hours=Math.floor(leave1/(3600*1000))
+                    var leave2=leave1%(3600*1000);
+                    var minutes=Math.floor(leave2/(60*1000))
+                    var leave3=leave2%(60*1000);
+                    var seconds=Math.round(leave3/1000)
+
+                    Vue.set(_this.openTime, 0, days < 10 ? '0' + days : days + '');
+                    Vue.set(_this.openTime, 1, hours < 10 ? '0' + hours : hours + '');
+                    Vue.set(_this.openTime, 2, minutes < 10 ? '0' + minutes : minutes + '');
+                    Vue.set(_this.openTime, 3, seconds < 10 ? '0' + seconds : seconds + '');
+                    if(!consoles){
+                        //console.log('update time',_this.openTime);
+                        consoles = true;
+                    }
+                }
+                timedown();
+                var openTimeInterval = setInterval(function () {
+                    totalTime -= 1000;
+
+                    timedown();
+
+                    if(totalTime < 1000){
+                        window.clearInterval(openTimeInterval);
+                        window.setTimeout(function () {
+                            //top.location.reload();
+                            _this.openStatus = false;
+                        },1000)
+                        return false;
+                    }
+                },1000)
+            },
+            getNewList : function () {
+                var _this = this;
+                Methods.ajax({
+                    type: 'POST',
+                    data: {
+                        category: 1,
+                        active:1,
+                        lang: LAN,
+                        index : 1,
+                        size: 3
+                    },
+                    url: DOMAIN_MAIN + '/portals/news/newsList',
+                    success: function(res) {
+                        _this.newsList = res.content;
+                    }
+                });
+            },
+            getNewImg : function (path) {
+                if(!path){
+                    return ''
+                }else{
+                    if(path.indexOf('/upload') != -1){
+                        return DOMAIN_MAIN + '' + path;
+                    }else{
+                        return path;
+                    }
+                }
+            },
+            initScroll : function(){
+                console.log('scroll');
+                if(!this.processScroll){
+                    this.processScroll = new IScroll('.ub-progress2',{
+                        mouseWheel: true,
+                        scrollbars: true,
+                        //scrollbars: "custom",
+                        //fadeScrollbars : true,
+                        bounceEasing : 'quadratic',
+                        scrollX: true,
+                        scrollY: false
+                    });
+                }else{
+                    this.processScroll.refresh();
+                }
+            }
+        },
+        created : function () {
+
+        },
+        mounted : function () {
+            var _this = this;
+            _this.getNewList();
+            _this.fullPageInit(function () {
+                new WOW().init();
+                _this.easeBgInit(true);
+                _this.starBgInit();
+                _this.teamCarouselInit();
+
+                _this.getServerTime(function (serverTime) {
+                    var openTime = 1514952000000;
+                    var nowTime = parseFloat(serverTime);
+                    var totalTime = openTime - nowTime;
+                    //console.log('init time:',openTime,nowTime,totalTime);
+                    if(totalTime > 0){
+                        _this.startTime = Methods.getDateTime(openTime,"YYYY-MM-DD HH:MM:SS");
+                        _this.openStatus = true;
+                        _this.countOpenTime(totalTime);
+                    }
+                });
+            });
+
+
+
+        }
+    })
+</script>

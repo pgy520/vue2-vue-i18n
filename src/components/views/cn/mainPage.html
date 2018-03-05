@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="<%= LAN %>">
+<head>
+    <%-include("include/headInit.html")%>
+    <%-include("include/headMeta.html")%>
+</head>
+<body>
+    <%-include("include/loading.html")%>
+    <div class="ub-wrapper">
+    <%-include("include/menuMain.html")%>
+    <section class="ub-main">
+    <% try{ %>
+        <%-include(templateMain)%>
+    <% }catch(err){ %>
+        <div class="alert alert-danger" role="alert">error:template file not find.</div>
+    <% } %>
+    </section>
+    <%-include("include/footMain.html")%>
+    <%-include("include/footInit.html")%>
+    </div>
+</body>
+</html>

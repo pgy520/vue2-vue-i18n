@@ -1,0 +1,107 @@
+<style>
+    @media screen and (max-width: 768px){
+        .user-center h1{
+            font-size:20px;
+        }
+        .user-center .title {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .user-center .btc-input {
+            width: 80%;
+        }
+        .user-center .button a {
+            font-size: 14px;
+            padding: 10px 20px;
+        }
+
+    }
+</style>
+
+<div class="user-center" id="claim_area">
+    <div class="container">
+        <h1><%- LANG('比特币(BTC)用户逾期领取UBTC申请') %></h1>
+        <div class="title"><%- LANG('请输入您个人钱包的比特币地址') %> <span style="color: #f00;">*<%- LANG('非交易所地址') %></span></div>
+        <div class="btc-input">
+            <input type="text" placeholder="<%- LANG('BTC地址') %>" v-model="address">
+        </div>
+        <div class="button"><a role="button" @click="claim"><%- LANG('申领UBTC') %></a></div>
+    </div>
+</div>
+<script>
+    var app = new Vue({
+        el: '#claim_area',
+        data: function () {
+            return {
+                address: "",
+            }
+        },
+        methods: {
+            //验证btc 地址长度
+            verify: function () {
+                if (this.address.trim().length < 26 || this.address.trim().length > 34) {
+                    JuaBox.info(UB.L("btc地址格式错误"));
+                    return false;
+                }
+                return true;
+            },
+            claim: function () {
+                if (!this.verify()) {
+                    return;
+                }
+                var _this = this;
+                Methods.ajax({
+                    type: 'POST',
+                    data: {
+                        "currencyType": 1,
+                        "address": this.address.trim()
+                    },
+                    url: DOMAIN_MAIN + '/portals/coinrecord/add',//userrecord/add',
+                    success:function(res){
+//                        alert("login success");
+                        window.sessionStorage.setItem("randomBtc", res.random);
+                        window.sessionStorage.setItem("btadd", _this.address.trim());
+                        window.sessionStorage.setItem("btkind", 'BTC');
+                        window.sessionStorage.setItem('btid',1)
+                        window.location = "/u/validation";
+                    },
+                    error: function (res) {
+                        if (res.code == 1) {//邮箱已经注册
+                            JuaBox.info(UB.L("登录失效,请重新登录"));
+                        }
+                        else if (res.code == 2) {//两次密码不同
+                            window.sessionStorage.setItem('unactive',1)
+                            JuaBox.info(UB.L("帐号未激活"),function(){
+                                window.location='/user/register'
+                            });
+                        }
+                        else if (res.code == 3) {//验证码错误
+                            JuaBox.info(UB.L("参数错误"));
+                        }
+                        else if (res.code == 4) {
+                            JuaBox.info(UB.L("btc地址格式错误"));
+                        }
+                        else if (res.code == 6) {
+                            JuaBox.info(UB.L("地址已存在"));
+                        }
+                    }
+                });
+            },
+
+
+        },
+        created: function () {
+                        window.location = "/u/service";
+        },
+        mounted: function () {
+
+        },
+        beforeCreate:function(){
+            if(!window.sessionStorage.getItem("mail"))
+            {
+                window.location="/user/login";
+            }
+
+        },
+    })
+</script>

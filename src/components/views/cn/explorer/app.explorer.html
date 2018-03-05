@@ -1,0 +1,382 @@
+<script>
+    var app_explorer = new Vue({
+        el: '#ub-explorer',
+        data: function () {
+            return {
+                page : "<%= page || 'index'%>",
+                mainInfo : '',
+                blockInfo : '',
+                addressInfo : '',
+                txInfo : '',
+                blockList : '',
+                poolList : '',
+                txList : '',
+                block :  Methods.getUrlparm("block"),
+                txid :  Methods.getUrlparm("txid"),
+                pool :  Methods.getUrlparm("pool"),
+                address : Methods.getUrlparm("address"),
+                date : Methods.getUrlparm("date") || parseInt(Date.parse((Methods.getDateNoTime(new Date()))) / 1000),
+                pageNo : 1,
+                pageSize : 5,
+                pageCount : 0,
+                coin : 'UBTC',
+                loading : false
+            }
+        },
+        methods : {
+            getDateParm : function (type) {
+                if(!type){
+                    return parseInt(Date.parse(Methods.getDateNoTime(new Date())) / 1000);
+                }
+                if(type == "+"){
+                    return parseInt(this.date) + 86400;
+                }
+                if(type == "-"){
+                    return parseInt(this.date) - 86400;
+                }
+            },
+            showDate : function (time) {
+                return Methods.getDateTime(time, 'YYYY-MM-DD');
+            },
+            doSearch : function (keyword) {
+                var val = $.trim(keyword);
+                var getSearchType = function(v){
+                    var addReg = /^[1|3|L][A-Za-z0-9]{26,33}$/;
+                    var idReg =  /^[0-9a-zA-Z]{55,}$/;
+                    var heightReg = /[0-9]{1,10}/;
+                    if(addReg.test(v)){
+                        return "address";
+                    }else{
+                        if(idReg.test(v)){
+                            return "tx";
+                        }
+                        else if(heightReg.test(v)){
+                            return "height";
+                        }else if(v.slice(0,6) == 0){
+                            return "block";
+                        }else{
+                            return "baidu";
+                        }
+                    }
+                }
+                if(val != ""){
+                    var searchType=getSearchType(val);
+                    if(searchType == "address"){
+                        location.href = this.getAddressUrl(val) ;
+                    }else if(searchType == "height" || searchType == "block"){
+                        location.href = this.getBlockUrl(val) ;
+                    }else if(searchType == "tx"){
+                        location.href = this.getTxUrl(val) ;
+                    }else{
+                        document.frmSearch.action = "https://www.baidu.com/baidu";
+                    }
+                }else{
+                    return false;
+                }
+            },
+            getMainInfo : function () {
+                var _this = this;
+                Methods.ubAjax({
+                    type: 'GET',
+                    url: DOMAIN_MAIN + '/portals/blockexplore/infos',
+                    success: function(res) {
+                        _this.mainInfo = res.result;
+                    }
+                });
+            },
+            getNewTxList : function () {
+                var _this = this;
+                Methods.ubAjax({
+                    type: 'GET',
+                    url: DOMAIN_MAIN + '/portals/blockexplore/ltxs',
+                    success: function(res) {
+                        _this.txList = res.result;
+                    }
+                });
+            },
+            getNewBlockList : function () {
+                var _this = this;
+                Methods.ubAjax({
+                    type: 'GET',
+                    url: DOMAIN_MAIN + '/portals/blockexplore/blocks',
+                    success: function(res) {
+                        _this.blockList = res.result;
+                    }
+                });
+            },
+            getBlockInfo : function () {
+                var _this = this, targetUrl;
+                if(Methods.isAllNumber(_this.block)){
+                    targetUrl = DOMAIN_MAIN + '/portals/blockexplore/height/' + _this.block
+                }else{
+                    targetUrl = DOMAIN_MAIN + '/portals/blockexplore/block/' + _this.block
+                }
+                if(_this.loading){
+                    return false;
+                }
+                _this.loading = true;
+                Methods.ubAjax({
+                    type: 'GET',
+                    url: targetUrl,
+                    data : {
+                        pageNo : _this.pageNo,
+                        pageSize : _this.pageSize
+                    },
+                    success: function(res) {
+                        if(_this.pageNo == 1){
+                            _this.blockInfo = res.result;
+                        }else{
+                            for(var i = 0, ilen = res.result.txs.length; i < ilen; i++){
+                                _this.blockInfo.txs.push(res.result.txs[i]);
+                            }
+                        }
+                        _this.pageNo += 1;
+                        _this.pageCount = res.result.txs.length;
+                        _this.loading = false;
+                    },
+                    error : function () {
+                        _this.loading = false;
+                    }
+
+                });
+            },
+            getBlockList : function () {
+                var _this = this;
+                Methods.ubAjax({
+                    type: 'GET',
+                    url: DOMAIN_MAIN + '/portals/blockexplore/poolblocks',
+                    data : {
+                        //w : _this.pool,
+                        reqTime : _this.date,
+                        pageNo : 1,
+                        pageSize : 1000
+                    },
+                    success: function(res) {
+                        _this.blockList = res.result;
+                        //filter pool
+                        if(_this.pool && res.result && res.result.length > 0){
+                            _this.blockList = [];
+                            for(var i = 0, ilen = res.result.length; i < ilen; i++){
+                                if(res.result[i].poolname == _this.pool){
+                                    _this.blockList.push(res.result[i])
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            getPoolList : function (callback) {
+                var _this = this;
+                Methods.ubAjax({
+                    type: 'GET',
+                    url: DOMAIN_MAIN + '/portals/blockexplore/pools',
+                    success: function(res) {
+                        if(res.result.fenbus.length > 0){
+                            for(var i = 0, ilen = res.result.fenbus.length; i < ilen; i++){
+                                if(res.result.fenbus[i])
+                                {
+                                    if(res.result.fenbus[i][0] == '未知'){
+                                        res.result.fenbus[i][0] = "<%- LANG('未知') %>";
+                                    }
+                                }
+                                else
+                                {
+                                    res.result.fenbus.splice(i,1)
+                                }
+                            }
+                        }
+                        _this.poolList = res.result;
+                        callback && callback();
+                    }
+                });
+            },
+            getAddressInfo : function () {
+                var _this = this;
+                if(_this.loading){
+                    return false;
+                }
+                _this.loading = true;
+                Methods.ubAjax({
+                    type: 'GET',
+                    url: DOMAIN_MAIN + '/portals/blockexplore/address/' + _this.address,
+                    data : {
+                        pageNo : _this.pageNo,
+                        pageSize : _this.pageSize
+                    },
+                    success: function(res) {
+                        if(_this.pageNo == 1){
+                            _this.addressInfo = res.result;
+                        }else{
+                            for(var i = 0, ilen = res.result.txs.length; i < ilen; i++){
+                                _this.addressInfo.txs.push(res.result.txs[i]);
+                            }
+                        }
+                        _this.pageNo += 1;
+                        _this.pageCount = res.result.txs.length;
+                        _this.loading = false;
+                    },
+                    error : function () {
+                        _this.loading = false;
+                    }
+                });
+            },
+            getTxInfo : function () {
+                var _this = this;
+                Methods.ubAjax({
+                    type: 'GET',
+                    url: DOMAIN_MAIN + '/portals/blockexplore/tx/' + _this.txid,
+                    success: function(res) {
+                        _this.txInfo = res.result;
+                    }
+                });
+            },
+            showPoolPie : function () {
+                //初始化矿池饼图
+                var _this = this;
+                Highcharts.chart(_this.$refs.tongjiDiv,{
+                    chart: {
+                        type: 'pie'
+                    },
+                    colors: ['#4572A7', '#8085e8', '#90ed7d', '#3D96AE', '#c42525', '#f15c80', '#e4d354', '#f28f43', '#8d4653', '#91e8e1'],
+                    title: {
+                        text: ''
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                color: '#000000',
+                                connectorColor: '#000000',
+                                formatter: function() {
+                                    return '<b>'+ this.point.name +'</b>: '+ (this.percentage * _this.poolList.total / 100).toFixed(0);
+                                }
+                            }
+                        },
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'share',
+                        data: _this.poolList.fenbus
+                    }],
+                    credits: {
+                        enabled: false
+                    }
+                });
+            },
+            pageInit : function () {
+                var _this = this;
+                switch(_this.page){
+                    case 'index':
+                        _this.getMainInfo();
+                        _this.getNewTxList();
+                        _this.getNewBlockList();
+                        _this.getPoolList(_this.showPoolPie);
+                        setInterval(function () {
+                            _this.getMainInfo();
+                            _this.getNewTxList();
+                            _this.getNewBlockList();
+                            _this.getPoolList();
+                        }, 5000)
+                        break;
+                    case 'block':
+                        _this.getBlockInfo();
+                        break;
+                    case 'blocks':
+                        _this.getBlockList();
+                        break;
+                    case 'address':
+                        _this.getAddressInfo();
+                        break;
+                    case 'tx':
+                        _this.getTxInfo();
+                        break;
+                    default:
+                        _this.getMainInfo();
+                }
+            },
+            getFloatSize : function (value,size) {
+                if(!value || !size) return;
+                var a, b, c, i;
+                a = value.toString();
+                b = a.indexOf(".");
+                c = a.length;
+                if (size == 0) {
+                    if (b != -1) {
+                        a = a.substring(0, b);
+                    }
+                } else {
+                    if (b == -1) {
+                        a = a + ".";
+                        for (i = 1; i <= size; i++) {
+                            a = a + "0";
+                        }
+                    } else {
+                        a = a.substring(0, b + size + 1);
+                        for (i = c; i <= b + size; i++) {
+                            a = a + "0";
+                        }
+                    }
+                }
+                return a;
+            },
+            updateTimes : function (time) {
+                var now = new Date().getTime() / 1000;
+                if (time == 0) {
+                    return '';
+                }
+                var d = now - time;
+                if (d < 60) {
+                    return ('< 1 minute');
+                } else {
+                    if (d < 3600) {
+                        var c = (parseInt(d / 60) > 1) ? "s" : "";
+                        return (parseInt(d / 60) + " minute" + c);
+                    } else {
+                        var c = (parseInt(d / 3600) > 1) ? "s" : "";
+                        return (parseInt(d / 3600)+ " hour" + c + " " + parseInt((d % 3600) / 60) + " minutes");
+                    }
+                }
+            },
+            getTxUrl : function (parm) {
+                return '/explorer/tx?txid=' + parm;
+            },
+            getAddressUrl : function (parm) {
+                return '/explorer/address?address=' + parm;
+            },
+            getBlockUrl : function (parm) {
+                return '/explorer/block?block=' + parm;
+            },
+            getBlockListUrl : function (date, pool) {
+                var result = '/explorer/blocks?date=' + date;
+                if(pool || this.pool){
+                    //result += '&pool=' + pool || this.pool;
+                }
+                return result;
+            }
+        },
+        created : function () {
+            this.pageInit();
+        },
+        mounted : function () {
+
+        },
+        computed : {
+
+        },
+        watch : {
+            poolList : function (newPool) {
+                var _this = this;
+                var oldPoolStr = JSON.stringify(_this.poolList);
+                var newPoolStr = JSON.stringify(newPool);
+                if(oldPoolStr != newPoolStr){
+                    _this.showPoolPie()
+                }
+            }
+        }
+    })
+</script>

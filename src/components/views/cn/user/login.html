@@ -1,0 +1,60 @@
+<div class="entrance-container" id="login_area" @keydown="keyListener(event)">
+    <h2><%- LANG('会员登录') %></h2>
+    <div class="form-grid">
+        <input placeholder="<%- LANG('邮箱') %>" type="text" v-model="login_name">
+    </div>
+    <div class="form-grid">
+        <input autocomplete="new-password" placeholder="<%- LANG('密码') %>" type="password" v-model="password">
+        <a role="button" href="/user/forgetLoginPwd" class="code-button"><%- LANG('忘记密码？') %></a>
+    </div>
+    <button type="submit" id="login" role="button" @click="login" ><%- LANG('登录') %></button>
+    <div class="switch"><%- LANG('还不是会员？') %><a href="/user/register"><%- LANG('立即注册') %></a></div>
+</div>
+<script>
+    var app = new Vue({
+        el: '#login_area',
+        data: function () {
+            return {
+                login_name:"",
+                password:"",
+            }
+        },
+        methods : {
+            //登录
+            login: function () {
+                var _this = this;
+                Methods.ajax({
+                    type: 'POST',
+                    data: {
+                        login_name:_this.login_name,
+                        password:this.password
+                    },
+                    url: DOMAIN_MAIN + '/portals/login',
+                    success: function(res) {
+//                        alert("login success");
+                        window.sessionStorage.setItem("mail",res.content.mail);
+                        window.location="/u/service";
+                    },
+                    error:function(res){
+                        JuaBox.info(UB.L("请填写正确的邮箱和密码"));
+                    }
+                });
+            },
+            //回车时，默认是登陆
+            keyListener:function(event){
+               if(event.keyCode == 13){
+                  if (document.all('login')!=null){
+                    document.all('login').click();
+                }
+           }
+    }
+
+
+        },
+        created : function () {
+        },
+        mounted : function () {
+            // this.on_return();
+        }
+    })
+</script>

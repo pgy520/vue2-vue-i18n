@@ -1,0 +1,122 @@
+<script>
+    var app_news = new Vue({
+        el: '#ub-news',
+        data: function () {
+            return {
+                newsList : '',
+                newsDetail : '',
+                columns : '',
+                currentColumn :  Methods.getUrlparm("column"),
+                currentId : Methods.getUrlparm("id"),
+                pageNo : 1,
+                pageSize : 5,
+                pageCount : 0,
+                loading : false
+            }
+        },
+        methods : {
+            getNewColumn : function () {
+                var _this = this;
+                Methods.ajax({
+                    type: 'POST',
+                    url: DOMAIN_MAIN + '/portals/category',
+                    success: function(res) {
+                        _this.columns = res.content;
+                    }
+                });
+            },
+            getNewList : function () {
+                var _this = this;
+                if(this.loading){
+                    return false;
+                }
+                _this.loading = true;
+                Methods.ajax({
+                    type: 'POST',
+                    data: {
+                        category: 1,
+                        lang: LAN,
+                        active:1,
+                        index : _this.pageNo,
+                        size: _this.pageSize
+                    },
+                    url: DOMAIN_MAIN + '/portals/news/newsList',
+                    success: function(res) {
+                        if(_this.pageNo == 1){
+                            _this.newsList = res.content;
+                        }else{
+                            for(var i = 0, ilen = res.content.length; i < ilen; i++){
+                                _this.newsList.push(res.content[i]);
+                            }
+                        }
+                        _this.pageCount = res.content.length || 0;
+                        _this.pageNo += 1;
+                        _this.loading = false;
+                    },
+                    error : function () {
+                        _this.loading = false;
+                    }
+                });
+            },
+            getNewImg : function (path) {
+                if(!path){
+                    return ''
+                }else{
+                    if(path.indexOf('/upload') != -1){
+                        return DOMAIN_MAIN + '' + path;
+                    }else{
+                        return path;
+                    }
+                }
+            },
+            getNewDetail : function () {
+                var _this = this;
+                Methods.ajax({
+                    type: 'POST',
+                    data: {
+                        news_id: parseFloat(_this.currentId),
+                        lang : LAN
+                    },
+                    url: DOMAIN_MAIN + '/portals/news/newsdetails',
+                    success: function(res) {
+                        _this.newsDetail = res.content;
+                        Vue.nextTick(function(){
+                            var img=$('.news-info img')
+                            for(var i=0;i<img.length;i++)
+                            {
+                                img.eq(i).attr('src','https://main.ub.com'+img.eq(i).attr('src'))
+                            }
+                        })
+
+                    }
+                });
+            }
+        },
+        created : function () {
+            //this.getNewColumn();
+            if(this.currentId){
+                this.getNewDetail();
+            }else{
+                this.getNewList();
+            }
+        },
+        mounted : function () {
+
+            // $(document).ready(function(){
+            //     var timer=setInterval(function(){
+            //         if($('.news-info img'))
+            //         {
+            //             var img=$('.news-info img')
+            //             for(let i=0;i<img.length;i++)
+            //             {
+            //                 img.eq(i).attr('src','https://main.ub.com'+img.eq(i).attr('src'))
+            //             }
+            //             clearInterval(timer)
+            //         }
+            //     },1)
+            //
+            // })
+
+        }
+    })
+</script>

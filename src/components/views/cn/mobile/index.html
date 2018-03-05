@@ -1,0 +1,262 @@
+<script>
+    var ismobile=/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
+    var notIpadpro=/iPad/i.test(navigator.userAgent)&&($(window).width()<1024)
+    if(!ismobile&&!notIpadpro) {
+        window.location.href = "/";
+    }
+</script>
+
+
+<div class="section pageone">
+    <div class="logo2"><img src="/src/images/home/mobilelogo.svg?1516643140347" alt="UnitedBitcoin"></div>
+    <div class="content">
+        <h1><%- LANG('UnitedBitcoin') %></h1>
+        <p><%- LANG('Linking values') %> & <%- LANG('Serving the world!') %></p>
+        <div class="button">
+            <a href="/news/detail?column=1&id=288" class="ub-button department_send" role="button"><%- LANG('Community Airdrop') %></a>
+            <a href="/support/whitepaper" role="button"><%- LANG('White Paper') %></a>
+        </div>
+        <div class="videos-title wow fadeInUp" data-wow-delay=".9s">UnitedBitcoin Documentary</div>
+        <div class="videos wow fadeInUp" data-wow-delay=".9s">
+            <div class="item" role="button"><img src="/src/images/videos/video1.png" alt="UnitedBitcoin Documentary - Episode 1"><p>Episode 1</p></div>
+            <div class="item" role="button"><img src="/src/images/videos/video2.png" alt="UnitedBitcoin Documentary - Episode 2"><p>Episode 2</p></div>
+            <div class="item" role="button"><img src="/src/images/videos/video3.png" alt="UnitedBitcoin Documentary - Episode 3"><p>Episode 3</p></div>
+        </div>
+    </div>
+    <div class="videos-modal">
+        <div class="videos-link">
+            <div class="close" role="button"></div>
+            <iframe width="854" height="480" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe width="854" height="480" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe width="854" height="480" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <!--<iframe width="854" height="480" src="https://www.youtube.com/embed/k3iMVpMbSKc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+            <!--<iframe width="854" height="480" src="https://www.youtube.com/embed/1-RXri70ens" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+            <!--<iframe width="854" height="480" src="https://www.youtube.com/embed/9fL0o32ShJk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+        </div>
+    </div>
+    <div class="arrow-down">
+        <i class="mobile icon-down"></i>
+    </div>
+</div>
+
+<div class="section pagetwo">
+    <div class="content">
+        <p><%- LANG('Overview') %></p>
+        <h1><%- LANG('UnitedBitcoin upgrades Bitcoin through Smart Contract Implementation') %></h1>
+
+        <div class="button">
+            <!--<a href="/project/overview" role="button"><%- LANG('Details') %></a>-->
+        </div>
+    </div>
+</div>
+
+<div class="section pagethree">
+    <div class="content">
+        <div class="img"><img src="<%= STATIC%>/images/mobile/bgthree.png"></div>
+        <h1><%- LANG('Building on Bitcoin’s Strong Foundations') %></h1>
+        <p><%- LANG('Original PoW mechanism, UTXO model and blockchain inheritance') %> <%- LANG('1:1 Asset allocation to active addresses, same block-time, halving-time and total cap. no pre-mine.') %></p>
+    </div>
+</div>
+<div class="section pagefour">
+    <div class="content">
+        <h1><%- LANG('LIGHTNING NETWORK') %><br><%- LANG('INSTANT PAYMENTS') %></h1>
+        <p><%- LANG('Greatly enhances scalability by introducing payment channels between users.') %></p>
+    </div>
+</div>
+
+
+<div class="section pagefive">
+    <div class="content">
+        <h1><%- LANG('FASTER TRANSACTIONS') %><br><%- LANG('ON-CHAIN SCALABILITY AND SEGWIT') %></h1>
+        <p><%- LANG('Greatly increases transaction speed by increasing the block-size to 8 MB and supporting SegWit') %></p>
+    </div>
+</div>
+<div class="section pagesix">
+    <div class="content">
+        <h1><%- LANG('SMART CONTRACTS') %><br><%- LANG('INFINITE POSSIBILITIES') %></h1>
+        <p><%- LANG('UnitedBitcoin adds smart contract capabilities along with other upgrades to greatly increase the utility and potential of Bitcoin.') %></p>
+    </div>
+</div>
+<div class="section pageseven">
+    <div class="content">
+        <h1><%- LANG('PEGGED FIAT CURRENCY SYSTEM') %></h1>
+        <p><%- LANG('The UB Foundation will manage funds from inactive wallets post fork and foster the ecosystem with them. It will also develop a cryptoasset – pegged to UB’s reserve – against fiat currencies to support projects worldwide.') %></p>
+    </div>
+</div>
+<div class="section pageeight">
+    <div class="content">
+        <h1><%- LANG('Roadmap') %></h1>
+        <div class="time-progress" id="time-progress">
+            <div class="progress-box">
+            <div class="item">
+                <h4><span><%- LANG('June 2016') %></span><br><%- LANG('UnitedBitcoin team starts the development of smart contracts') %></h4>
+                <p><%- LANG('The core members of UnitedBitcoin’s development team start the development of LUA based smart contracts.') %></p>
+            </div>
+            <div class="item">
+                <h4><span><%- LANG('May 2017') %></span><br><%- LANG('The first UVM smart contract is fully tested') %></h4>
+                <p><%- LANG('Smart Contract and UVM functionality has been successfully tested. Two languages, similar in structure and syntax to C# and JAVA have been added as well.') %></p>
+            </div>
+            <div class="item">
+                <h4><span><%- LANG('September 12, 2017') %></span><br><%- LANG('Beta test of version 0.1 of UnitedBitcoin (8MB + SegWit)') %></h4>
+                <p><%- LANG('To speed up testing and facilitate acilitating adoption, smart contracts have been excluded from this test. Testing the increased block-size (to 8MB) as well as SegWit was a success.') %></p>
+            </div>
+            <div class="item">
+                <h4><span><%- LANG('December 7, 2017') %></span><br><%- LANG('Version 0.5 of the wallet officially migrated to GitHub') %></h4>
+                <p><%- LANG('The wallet with automated upgrade program is officially migrated to GitHub and all source codes are open to public, more teams around the world joined UB.') %></p>
+            </div>
+            <div class="item">
+                <h4><span><%- LANG('December 12, 2017') %></span><br><%- LANG('Fork is executed and UnitedBitcoin is launched globally') %></h4>
+                <p><%- LANG('The fork will happen on December 12, 2017 with UnitedBitcoin officially released and launched globally during an event in Silicon Valley.') %></p>
+            </div>
+
+            <div class="item">
+                <h4><span><%- LANG('January 3, 2018') %></span><br><%- LANG('The second phase of Asset Allocation is completed') %></h4>
+                <p><%- LANG('The manual allocation of assets is completed on January 3, 2018 (started on December 12, 2017), marking an end to the 2nd phase of the Bitcoin asset allocation procedure.') %></p>
+            </div>
+            <div class="item">
+                <h4><span><%- LANG('April 2018') %></span><br><%- LANG('(Projected) Issuance of a digital currency pegged to fiat currencies') %></h4>
+                <p><%- LANG("The UB foundation will issue it's first digital currency pegged to fiat currencies using UBTC as collateral") %></p>
+            </div>
+
+
+            <div class="item">
+                <h4><span><%- LANG('April 4, 2018') %></span><br><%- LANG('(Projected) Upgrade UnitedBitcoin, add support for smart contracts') %></h4>
+                <p><%- LANG('If there is no delay in testing, UnitedBitcoin will be officially upgraded to a version with smart contract support.') %></p>
+            </div>
+            <div class="item">
+                <h4><span><%- LANG('April 14, 2018') %></span><br><%- LANG('(Projected) Transfer of all pegged currencies to smart contracts') %></h4>
+                <p><%- LANG('Because it is too complex for color coins to support smart contracts, in order to support the smart contracts for pegged currencies, all pegged currencies will be transferred to the smart contracts system.') %></p>
+
+            </div>
+
+            <div class="item">
+                <h4><span><%- LANG('July 1, 2018') %></span><br><%- LANG('(Projected) Upgrade UnitedBitcoin with Lightning Network support') %></h4>
+                <p><%- LANG('If there is no delay in development, UnitedBitcoin will be upgraded to a version with Lightning Network and payment channels support.') %></p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="section pagenine">
+    <div class="content">
+        <h1><%- LANG('Technical team') %></h1>
+        <ul>
+            <li>
+                <div class="photo"><img src="<%= STATIC%>/images/team/1-1.jpg"></div>
+                <div class="info">
+                    <h4><%- LANG('Jeff Garzik') %></h4>
+                    <p><%- LANG('Board Member') %> & <%- LANG('Chief Scientist') %></p>
+                </div>
+            </li>
+            <li>
+                <div class="photo"><img src="<%= STATIC%>/images/team/1-2.jpg"></div>
+                <div class="info">
+                    <h4><%- LANG('Matthew Roszak') %></h4>
+                    <p><%- LANG('Board Member') %>, <%- LANG('Chief Strategy Officer') %></p>
+                </div>
+            </li>
+            <li>
+                <div class="photo"><img src="<%= STATIC%>/images/team/wilsonchoi2.png"></div>
+                <div class="info">
+                    <h4><%- LANG('Wilson Choi') %></h4>
+                    <p><%- LANG('Board Member') %>, <%- LANG('Chief Operating Officer') %></p>
+                </div>
+            </li>
+        </ul>
+        <div class="button">
+            <a href="/about/team" role="button">Details</a>
+        </div>
+    </div>
+</div>
+<div class="section pageten">
+    <div class="content">
+        <ul>
+            <li>
+                <div class="icon"><img src="<%= STATIC%>/images/home/qb.png"></div>
+                <div class="info">
+                    <h4><%- LANG('Wallet') %></h4>
+                    <p><%- LANG('UnitedBitcoin comes with 8MB block sizes, SegWit support, Asset Verification Allocation, Replay Protection, upcoming smart contract support and Lightning Network implementation. Download our wallet here.') %></p>
+                </div>
+            </li>
+            <li>
+                <div class="icon"><img src="<%= STATIC%>/images/home/gj.png"></div>
+                <div class="info">
+                    <h4><%- LANG('Development Tool') %></h4>
+                    <p><%- LANG('UnitedBitcoin has developed an Integrated Development Environment specifically for creating smart-contracts. To read more, click here.') %></p>
+                </div>
+            </li>
+            <li>
+                <div class="icon"><img src="<%= STATIC%>/images/home/wd.png"></div>
+                <div class="info">
+                    <h4><%- LANG('White paper') %></h4>
+                    <p><%- LANG('For a complete breakdown of UnitedBitcoin’s features, advantages and latest enhancements, please refer to our white paper.') %></p>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+
+<div class="section pageeleven">
+    <div class="content">
+        <!--<div class="wechat-code"><img src="/src/images/wechat.png" /></div>-->
+    <div class="follow">
+        <a href="https://twitter.com/United_Bitcoin" target="_blank"><i class="ub-icon ub-tuite"></i></a>
+        <a href="https://www.linkedin.com/company/13599492/" target="_blank"><i class="ub-icon ub-in"></i></a>
+        <a href="https://github.com/UnitedBitcoin/UnitedBitcoin" target="_blank"><i class="ub-icon ub-github"></i></a>
+        <a href="https://t.me/unitedbitcoin" target="_blank"><i class="ub-icon ub-telegraph"></i></a>
+        <a href="https://www.youtube.com/channel/UC2jI3znZpaWwW4vPjqmO1jw" target="_blank"><i class="ub-icon ub-youtube"></i></a>
+    </div>
+    <div class="copyright">Copyright 2017 <%= WEB.NAME %>. All Rights Reserved</div>
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        console.log('lan',LAN)
+        if(LAN=='cn')
+        {
+            $('.department_send').attr('href','https://www.ub.com/news/detail?column=1&id=294')
+        }
+        else if(LAN=='en')
+        {
+            $('.department_send').attr('href','https://www.ub.com/news/detail?column=1&id=318')
+        }
+
+        if(LAN=='cn')
+        {
+            $('.videos').remove()
+            $('.videos-title').remove()
+            $('.videos-modal').remove()
+            return;
+        }
+        var iframeArr=[
+            "https://www.youtube.com/embed/k3iMVpMbSKc",
+            "https://www.youtube.com/embed/1-RXri70ens",
+            "https://www.youtube.com/embed/9fL0o32ShJk"
+        ]
+        $('.item').click(function(){
+            console.log($(this).index())
+            $('.videos-modal').addClass('open')
+            for(var i=0;i<$('iframe').length;i++)
+            {
+                $('iframe').eq(i).removeClass('video-on')
+                $('iframe').eq(i).attr('src','')
+            }
+            $('iframe').eq($(this).index()).attr('src',iframeArr[$(this).index()])
+            $('iframe').eq($(this).index()).addClass('video-on')
+        })
+        //    关闭播放
+        $('.close').click(function(){
+            $('.videos-modal').removeClass('open')
+            for(var i=0;i<$('iframe').length;i++)
+            {
+                $('iframe').eq(i).attr('src','')
+            }
+            // $('iframe').remove()
+        })
+    })
+</script>

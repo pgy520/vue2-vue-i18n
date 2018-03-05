@@ -1,0 +1,106 @@
+<%-include("common.html")%>
+<script src="/lib/others/highcharts.js" type="text/javascript"></script>
+<div class="ub-explorer" id="ub-explorer">
+    <div class="container">
+        <div class="row" id="webInfo">
+            <div class="col-sm-6">
+                <ul class="list-group">
+                    <li class="list-group-item  list-group-item-info"><%- LANG('未确认交易') %>：<span>{{mainInfo.txsize}}</span></li>
+                    <li class="list-group-item"><%- LANG('全网络难度') %>：<span>{{mainInfo.difficulty}}</span></li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <ul class="list-group">
+                    <li class="list-group-item  list-group-item-info"><%- LANG('价格') %>：<span>${{(parseFloat(mainInfo.price)/6.63).toFixed(2)}}</span>  （<%- LANG('来源') %>：<a target="_blank" href="https://www.zb.com">ZB</a>）</li>
+                    <li class="list-group-item"><%- LANG('全网络算力') %>：<span>{{mainInfo.networkhashps}}</span></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-12">
+                <h3 class="bk-leftLine"><%- LANG('最新生成的区块') %><a class="pull-right right" href="/explorer/blocks"><%- LANG('更多') %></a></h3>
+            </div>
+        </div>
+        <div class="row" id="blockDivC">
+            <div class="col-sm-12" :class="{'loading loading-light-bg' : !blockList}">
+                <table class="table table-striped table-bordered" id="blockDiv">
+                    <thead>
+                    <tr class="block">
+                        <th style="text-align:left"><%- LANG('高度') %></th>
+                        <th style="text-align:left"><%- LANG('块龄') %></th>
+                        <th class="hidden-xs" style="text-align:left"><%- LANG('交易') %></th>
+                        <th class="hidden-xs" style="text-align:left"><%- LANG('奖励') %></th>
+                        <th style="text-align:left"><%- LANG('播报方') %></th>
+                        <th class="hidden-xs" style="text-align:left"><%- LANG('数据量') %>(KB)</th>
+                    </tr>
+                    </thead>
+                    <tbody id="blockNew">
+                        <tr v-for="b in blockList" h="500147">
+                            <td>
+                                <a :href="getBlockUrl(b.height)">{{b.height}}</a>
+                                <span v-if="b.rpoolname" style="color:red;"><%- LANG('孤立') %></span>
+                            </td>
+                            <td><div>{{updateTimes(b.time)}}</div></td>
+                            <td class="hidden-xs">{{b.txsize}}</td>
+                            <td class="hidden-xs">{{b.reward}} {{coin}}</td>
+                            <td><a :href="getBlockListUrl('',b.poolname)">{{b.poolname}}</a></td>
+                            <td class="hidden-xs">{{(b.size/1000)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6" style="min-height:600px;" :class="{'loading loading-light-bg' : !txList}">
+                <h3 class="bk-leftLine"><%- LANG('最新生成的交易') %></h3>
+                <table class="table table-striped table-bordered">
+                    <tbody id="txsDiv">
+                        <tr v-for="t in txList">
+                            <td :title="t.txid">
+                                <div>
+                                    <a class="hash-link" :href="getTxUrl(t.txid)">
+                                        <span>{{t.txid.substring(0,25)}}</span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="hidden-sm hidden-xs">
+                                <div>{{updateTimes(t.time)}}</div>
+                            </td>
+                            <td>
+                                <div class="number">
+                                    {{t.inamount}}
+                                </div>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+            <div class="col-sm-6" style="min-height:600px;" :class="{'loading loading-light-bg' : !poolList}">
+                <h3 class="bk-leftLine"><%- LANG('24H区块分布') %></h3>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="p-1" style="text-align:left"><%- LANG('矿池') %></th>
+                        <th class="p-2" style="text-align:left"><%- LANG('区块数') %></th>
+                        <th class="p-3" style="text-align:left"><%- LANG('占有率') %></th>
+                    </tr>
+                    </thead>
+                    <tbody id="a_table">
+                        <template v-for="f,index in poolList.fenbus" v-if="index < 3">
+                            <tr class="first">
+                                <td class="p-1">
+                                    <div class="resp-text-hash w90">
+                                        <a :href="getBlockListUrl('',f[0])">{{f[0]}}</a>
+                                    </div>
+                                </td>
+                                <td class="p-2">{{f[2]}}</td>
+                                <td class="p-3">{{(f[1] * 100).toFixed(2)}}%</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <div ref="tongjiDiv" data-highcharts-chart="0"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("app.explorer.html", {page : 'index'})%>

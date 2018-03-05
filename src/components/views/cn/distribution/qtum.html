@@ -1,0 +1,20 @@
+<div class="ub-banner" style="background: url('/src/images/home/banner3.jpg') no-repeat center center / cover;">
+    <h2><%- LANG('Claim UBTC') %></h2>
+</div>
+<div class="ub-main">
+    <div class="ub-container">
+        <div class="ub-content">
+            <div class="content-text">
+                <p><%- LANG('Please complete the fields and once your transaction is verified we shall credit you with UBTC.') %></p>
+                <h3><%- LANG('TXID Submission Form') %></h3>
+                <div class="join-form" id="app-join">
+                    <input placeholder="<%- LANG('Name') %>" type="text" v-model="name">
+                    <input placeholder="<%- LANG('Email') %>" type="text.trim" v-model="mail">
+                    <input placeholder="<%- LANG('TXID') %>" type="text.trim" v-model="txid" style="max-width: 600px;">
+                    <a @click="doSubmit" role="button" class="button"><%- LANG('Submit') %></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("../about/app.join.html", {type : 3})%>

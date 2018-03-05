@@ -1,0 +1,287 @@
+<style>
+    #mbnav{
+        -moz-touch-action:pan-y;-ms-touch-action:pan-y;touch-action:pan-y;
+    }
+</style>
+<header class="header" id="app-menu">
+        <div class="grid left">
+        <div class="logo">
+            <a href="/" role="button" target="_self" title="<%= WEB.NAME%>"><img src="<%= STATIC%>/images/home/logo.svg?<%= VERSION%>" alt="<%= WEB.NAME%>" /></a>
+        </div>
+        <div class="menu">
+            <ul>
+                <!--<li><a role="button" href="/#page1"><%- LANG('Home') %></a></li>-->
+                <li><a role="button" href="javascript:void(0)" arrow="true"><%- LANG('PROJECT') %></a>
+                    <div class="menu-list">
+                        <ul>
+                            <!--<li><a role="button" href="/project/overview"><%- LANG('Project overview') %></a></li>-->
+                            <li><a role="button" href="/support/whitepaper"><%- LANG('White Paper') %></a></li>
+                            <!--<li><a role="button" href="/project/features"><%- LANG('Features') %></a></li>-->
+                            <li><a role="button" href="/project/get"><%- LANG('Get UnitedBitcoin') %></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a role="button" class="ecosystem_primary" href="/project/ecosystem"><%- LANG('Ecosystem') %></a></li>
+                <li><a role="button" href="/explorer"><%- LANG('Explorer') %></a></li>
+
+                <li><a role="button" href="javascript:void(0)" arrow="true"><%- LANG('Download') %></a>
+
+                    <div class="menu-list">
+                        <ul>
+                            <li><a role="button" href="/project/wallet"><%- LANG('Wallet & Source Code') %></a></li>
+                            <li><a role="button" href="/project/ide"><%- LANG('IDE') %></a></li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li><a role="button" href="/support/faq"><%- LANG('SUPPORT') %></a></li>
+
+                <li><a role="button" href="javascript:void(0)" arrow="true"><%- LANG('About') %></a>
+                    <div class="menu-list">
+                        <ul>
+                            <li><a role="button" href="/about/team"><%- LANG('Team') %></a></li>
+                            <li><a role="button" class="contact_us" href="/about/contact"><%- LANG('Contact Us') %></a></li>
+                            <li><a role="button" href="/about/joinus"><%- LANG('Join Us') %></a></li>
+                            <!--<li><a role="button" href="/about/businesscooperation"><%- LANG('Business Cooperation') %></a></li>-->
+
+                        </ul>
+                    </div>
+                </li>
+                <li><a role="button" href="/news"><%- LANG('News') %></a></li>
+            </ul>
+        </div>
+        </div>
+        <div class="grid right">
+            <div class="menu">
+            <ul>
+
+                <li v-show="mail==''"><a role="button" href="/user/login"><i class="ub-icon ub-signin"></i><%- LANG('登录') %></a></li>
+                <li v-show="mail==''"><a role="button" href="/user/register"><i class="ub-icon ub-signup"></i><%- LANG('注册') %></a></li>
+
+
+                <li v-show="mail!=''"><a role="button" href="javascript:;" arrow="true"><i class="ub-icon ub-user"></i>{{mail}}</a>
+                    <div class="menu-list">
+                        <ul>
+                            <li><a role="button" href="/u/service"><%- LANG('申领UBTC') %></a></li>
+                            <li><a role="button" href="/extract"><%- LANG('提取UBTC') %></a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li v-show="mail!=''"><a role="button" @click="logout"><i class="ub-icon ub-signout"></i><%- LANG('退出登录') %></a></li>
+
+
+                <li class="lang"><a role="button" href="javascript:void(0)" arrow="true"><i class="ub-icon ub-lang"></i><%- WEB.LAN[LAN]%></a>
+                    <div class="menu-list">
+                        <ul>
+                            <% for(var key in WEB.LAN){ %>
+                            <% if(key != LAN){ %>
+                            <li><a role="button" class="<%= key %>" onclick="Methods.setLan('<%= key %>')"><%- WEB.LAN[key]%></a></li>
+                            <% } %>
+                            <% } %>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            </div>
+    </div>
+    <div class="mobile-menu-button">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+
+    <div class="mobile-menu">
+        <ul id="mbnav">
+            <li><a role="button" href="/#page1"><%- LANG('Home') %></a></li>
+            <li><a role="button" href="javascript:void(0)" arrow="true"><%- LANG('PROJECT') %></a>
+                <div class="menu-list">
+                    <ul>
+                        <!--<li><a role="button" href="/project/overview"><%- LANG('Project overview') %></a></li>-->
+                        <li><a role="button" href="/support/whitepaper"><%- LANG('White Paper') %></a></li>
+                        <!--<li><a role="button" href="/project/features"><%- LANG('Features') %></a></li>-->
+                        <li><a role="button" href="/project/get"><%- LANG('Get UnitedBitcoin') %></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a role="button" class="ecosystem_primary" href="/project/ecosystem"><%- LANG('Ecosystem') %></a></li>
+            <li><a role="button" href="/explorer"><%- LANG('Explorer') %></a></li>
+
+            <li><a role="button" href="javascript:void(0)" arrow="true"><%- LANG('Download') %></a>
+
+                <div class="menu-list">
+                    <ul>
+                        <li><a role="button" href="/project/wallet"><%- LANG('Wallet & Source Code') %></a></li>
+                        <li><a role="button" href="/project/ide"><%- LANG('IDE') %></a></li>
+
+                    </ul>
+                </div>
+
+            </li>
+            <li><a role="button" href="/support/faq"><%- LANG('SUPPORT') %></a></li>
+            <li><a role="button" href="javascript:void(0)" arrow="true"><%- LANG('About') %></a>
+                <div class="menu-list">
+                    <ul>
+                        <li><a role="button" href="/about/team"><%- LANG('Team') %></a></li>
+                        <li><a role="button"  class="contact_us" href="/about/contact"><%- LANG('Contact Us') %></a></li>
+                        <li><a role="button" href="/about/joinus"><%- LANG('Join Us') %></a></li>
+                        <!--<li><a role="button" href="/about/businesscooperation"><%- LANG('Business Cooperation') %></a></li>-->
+
+                    </ul>
+                </div>
+            </li>
+            <li><a role="button" href="/news"><%- LANG('News') %></a></li>
+
+            <li class="not_login"><a role="button" href="/user/login"><i class="ub-icon ub-signin"></i><%- LANG('登录') %></a></li>
+            <li class="not_login"><a role="button" href="/user/register"><i class="ub-icon ub-signup"></i><%- LANG('注册') %></a></li>
+            <li class="logined"><a role="button" href="javascript:void(0)" arrow="true"><i class="ub-icon ub-user"></i><span class="mobile_mail"></span></a>
+                <div class="menu-list">
+                    <ul>
+                        <li><a role="button" href="/u/service"><%- LANG('申领UBTC') %></a></li>
+                        <li><a role="button" href="/extract"><%- LANG('提取UBTC') %></a></li>
+                        <li><a role="button" @click="logout"><%- LANG('退出登录') %></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a role="button" href="javascript:void(0)" arrow="true"><i class="ub-icon ub-lang"></i><%- WEB.LAN[LAN]%></a>
+                <div class="menu-list">
+                    <ul>
+                        <% for(var key in WEB.LAN){ %>
+                        <% if(key != LAN){ %>
+                        <li><a role="button" class="<%= key %>" onclick="Methods.setLan('<%= key %>')"><%- WEB.LAN[key]%></a></li>
+                        <% } %>
+                        <% } %>
+                    </ul>
+                </div>
+            </li>
+
+        </ul>
+        <div class="mobile-menu-close">
+            <p>
+            <span class="l"></span>
+            <span class="r"></span>
+            </p>
+        </div>
+    </div>
+
+
+
+
+</header>
+
+<script type="text/javascript">
+    jQuery(document).ready(function( $ ) {
+        /*$("#ub-Menu").mmenu({
+            slidingSubmenus : false
+        });*/
+
+        $(".ub-loading").fadeOut(500);
+        $('.mobile-menu-button').click(function(){
+            $('.mobile-menu').addClass('open')
+        })
+
+        $('.mobile-menu-close').click(function(){
+            $('.mobile-menu').removeClass('open')
+        })
+
+        $('.menu-list').prev().click(function(){
+            // console.log($('.menu-list').length)
+            if($(this).closest('li').hasClass('on')){
+                $(this).closest('li').removeClass('on')
+                return;
+            }
+            $(this).closest('li').siblings('li').removeClass('on')
+            $(this).closest('li').addClass('on')
+        })
+
+        if(window.sessionStorage.getItem('mail')){
+            $('.logined').show();
+            $('.mobile_mail').html(window.sessionStorage.getItem('mail'))
+            $('.not_login').hide();
+        }
+        else
+        {
+            $('.logined').hide();
+            $('.mobile_mail').html('')
+            $('.not_login').show();
+        }
+
+
+
+        //注释 by pengfufu
+        // $("#ub-Menu").mmenu({
+        //     navbar: {
+        //         title: "UB.COM"
+        //     }
+        // });
+    });
+
+
+</script>
+
+<script>
+    var app_menu = new Vue({
+        el: '#app-menu',
+        data: function () {
+            return {
+                mail:"",
+                autoPlay: Methods.getCookie(ENV + 'autoPlay')
+            }
+        },
+        methods : {
+            swapMusic: function () {
+                var oAudio = $('#ubaudio')[0];
+                if (oAudio.paused) {
+                    oAudio.play();
+                    Methods.setCookie(ENV + 'autoPlay', 1, 7);
+
+                }else {
+                    oAudio.pause();
+                    Methods.setCookie(ENV + 'autoPlay', 0, 7);
+                }
+                $(".music").toggleClass("stop");
+            },
+            initMusic: function () {
+                //console.log(this.autoPlay);
+                if(this.autoPlay == 0 || location.pathname != '/'){
+                    $('#ubaudio')[0].pause();
+                    setTimeout(function () {
+                        $(".music").addClass("stop");
+                    },300)
+                }else{
+                    $('#ubaudio')[0].play();
+                }
+            },
+            initMobileMenu : function () {
+                $("#ub-Menu").html();
+            },
+
+            //注销
+            logout: function(){
+                Methods.ajax({
+
+                    type: 'POST',
+                    url: DOMAIN_MAIN + '/portals/logout',
+                    success: function(res) {
+                        window.sessionStorage.removeItem("mail");
+                        window.location="/";
+                    },
+                    error:function(res){
+                    }
+                });
+            }
+
+        },
+        created : function () {
+
+        },
+        mounted : function () {
+            //this.initMusic();
+          if(window.sessionStorage.getItem("mail")){
+              this.mail = window.sessionStorage.getItem("mail");
+          }
+        }
+    })
+</script>

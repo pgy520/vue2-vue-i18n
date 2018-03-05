@@ -1,0 +1,33 @@
+<% if(typeof ENV != 'undefined' && ENV == 'z' ){%>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c609862b7835b17dff16365ea825fdc2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<% } %>
+<script>
+    if(LAN=='hk')
+    {
+        // $('.ecosystem_primary').html('生態系統')
+        $('.contact_us').html('聯繫我們')
+    }
+    if(Methods.IEVersion() < 10){
+        top.location.href = '/sorry';
+    }
+    $(document).ready(function () {
+        var checkHeadFix = function () {
+            var t = $(window).scrollTop();
+            if (t > 0) {
+                $(".header").addClass("header-fixed");
+            } else {
+                $(".header").removeClass("header-fixed");
+            }
+        }
+        checkHeadFix();
+        $(window).on('scroll', checkHeadFix)
+    });
+</script>

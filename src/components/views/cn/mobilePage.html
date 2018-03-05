@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="<%= LAN %>">
+<head>
+    <%-include("include/headInit.html")%>
+    <%-include("include/headMeta.html")%>
+    <link href="<%= STATIC %>/styles/mobile.css?<%= VERSION %>" rel="stylesheet" type="text/css">
+    <link href="//at.alicdn.com/t/font_550776_k4igsoftqv7psyvi.css" rel="stylesheet" type="text/css">
+    <script src="<%= STATIC %>/scripts/jquery.easing.min.js?<%= VERSION %>" charset="utf-8" type="text/javascript"></script>
+    <script src="<%= STATIC %>/scripts/jquery.fullpage.min.js?<%= VERSION %>" charset="utf-8" type="text/javascript"></script>
+    <script src="<%= STATIC %>/scripts/jquery.nicescroll.min.js?<%= VERSION %>" charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="mobile-wrapper">
+<div class="mobile-wrapper-bg">
+<%-include("include/loading.html")%>
+<%-include("include/menuMain.html")%>
+    <div class="mobile-main" id="fullpage">
+    <% try{ %>
+    <%-include(templateMain)%>
+    <% }catch(err){ %>
+    <div class="alert alert-danger" role="alert">error:template file not find.</div>
+    <% } %>
+</div>
+</div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#fullpage').fullpage({
+            css3:false,
+            navigation:true,
+            scrollingSpeed:1000,
+            easing: 'easeInOutExpo',
+            scrollBar:true
+        });
+        $("#time-progress").niceScroll({
+            // nativeparentscrolling:false,
+            // touchbehavior: true, // 激活拖拽滚动
+            cursorcolor: "#00ccff",
+            cursorborder: "1px solid #00ccff",
+            cursorwidth: "4px",
+            autohidemode: false,
+            horizrailenabled: true
+        });
+    });
+</script>
+<%-include("include/footInit.html")%>
+</body>
+</html>

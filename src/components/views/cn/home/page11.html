@@ -1,0 +1,20 @@
+<div class="section section11">
+    <div class="container">
+            <div class="ub-box">
+                <div class="ub-text">
+                    <h3><%- LANG('Latest news') %></h3>
+                </div>
+                <div class="ub-news">
+                        <a class="item" :href="'/news/detail?column='+ news.category +'&id=' + news.news_id" v-if="news.active" v-for="news,index in newsList" target="_blank">
+                            <div class="photo"><img :src="getNewImg(news.news_thumbnail)"></div>
+                            <div class="text">
+                            <h3 :data-text="news.news_title">{{news.news_title}}</h3>
+                            <div class="date"><%- LANG('Published on') %> {{news.create_date}}</div>
+                            <p>{{news.news_desc}}</p>
+                            </div>
+                        </a>
+            </div>
+                <div style="text-align: center"><a href="/news" target="_blank" role="button" class="ub-button"><span><%- LANG('More') %></span></a></div>
+    </div>
+    </div>
+</div>

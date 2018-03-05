@@ -1,0 +1,106 @@
+<style>
+    .importanttip.title>p{
+        line-height:20px;
+    }
+    .importanttip.title>p>span{
+        color: red;
+    }
+    .importanttip.title>p>span>a{
+        color: #00c4f5;
+        text-decoration:underline;
+    }
+    @media screen and (max-width: 768px){
+        *{
+            touch-action:unset;
+            -ms-touch-action:unset;
+        }
+        .user-center {
+            padding: 50px 0;
+        }
+        .user-center .btc-address {
+            font-size: 12px;
+            margin: 20px 0 30px 0;
+            padding: 10px 5px;
+        }
+        .user-center h1{
+            font-size:20px;
+        }
+        .user-center .button a {
+            font-size: 14px;
+            padding: 10px 20px;
+        }
+        .importanttip.title>p {
+            font-size: 12px;
+            line-height:18px;
+        }
+        .user-center .title{
+            padding-left:10px;
+        }
+
+    }
+</style>
+
+<div class="user-center" id="validation_area">
+    <div class="container">
+        <!--<h1><%- LANG('比特币(BTC)用户逾期领取UBTC申请') %></h1>-->
+        <h1 v-html="apply"></h1>
+        <div class="title" v-html="randomWord"></div>
+        <div class="btc-address">
+            <span>{{btkind}}<%- LANG('地址') %>：</span>
+            <span v-if="btkind=='HSR'">HFDSPUXwM7iokMfgiJPDuLV2UcWRRr4xFi</span>
+            <span v-if="btkind=='QTUM'">QgxaPhaMVG48zo7vCnj3xQnkZKmy6RWsRp</span>
+            <span v-if="btkind=='ETH'">0x805CC2C7E01226d35CC5dEDc7dA6620Fc0564d92</span>
+            <span v-if="btkind=='LTC'">LNrtMAN8nmVGFLgamME4bva2StRhD5eVoZ</span>
+            <span v-if="btkind=='INK'">QMwQbjTP8UcZPUhpPbkPVpfeHyYgKEVv6p</span>
+        </div>
+        <div class="button"><a href="othersConfirm" role="button"><%- LANG('完成') %></a></div>
+        <div class="importanttip title">
+            <p style="text-align:left;margin-bottom:10px"><%- LANG('重要提示')%>:</p>
+            <p style="text-align:left;margin-bottom:10px">1.&nbsp;<span><%- LANG('请从您填写的地址转出指定金额，如果您的钱包不允许您指定地址，我们建议您使用一个可以控制的转账地址；')%></span></p>
+            <p style="text-align:left;margin-bottom:10px">2.&nbsp;<span><%- LANG("请只向我们转入指定金额，无需添加手续费。如果您转入非指定金额，您的地址将不获验证。如有疑问，请联络<a href='/support/faq' target='_blank'>support@ub.com</a>")%></span></p>
+        </div>
+    </div>
+</div>
+<script>
+    var app = new Vue({
+        el: '#validation_area',
+        data: function () {
+            return {
+                randomBtc:"",
+                btkind:'',
+            }
+        },
+        computed : {
+            randomWord : function () {
+                return UB.L("为验证您的比特币地址，请从该地址转账X到以下Y地址。完成后您可继续为另一个Y地址申领UBTC或点击完成退出申领。", this.randomBtc,this.btkind);
+            },
+            apply:function(){
+                return UB.L("X用户领取UBTC申请", this.btkind);
+            }
+        },
+        methods : {
+
+
+        },
+        created : function () {
+        },
+
+        mounted : function () {
+           var tempRandomBtc = window.sessionStorage.getItem("randomBtc");
+            this.btkind=window.sessionStorage.getItem('btkind')?window.sessionStorage.getItem('btkind'):''
+           if(tempRandomBtc){
+               this.randomBtc =tempRandomBtc ;
+           }
+           else{
+
+           }
+        },
+        beforeCreate:function(){
+            // if(!window.sessionStorage.getItem("mail"))
+            // {
+            //     window.location="/user/login";
+            // }
+
+        },
+    })
+</script>

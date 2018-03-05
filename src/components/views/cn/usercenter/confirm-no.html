@@ -1,0 +1,16 @@
+<div class="user-center">
+    <div class="container">
+        <h1 style="color: #f00"><%- LANG('很抱歉，您不符合UBTC申领资格。') %></h1>
+        <div class="prompt"><%- LANG('您可以通过交易所购买持有UBTC，点此查阅UBTC已上线的交易所。感谢您的关注！') %></div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $(document).ready(function(){
+            if(!window.sessionStorage.getItem("mail"))
+            {
+                window.location="/user/login";
+            }
+        })
+    })
+</script>

@@ -1,0 +1,131 @@
+<script type="text/x-template" id="tx-info">
+    <div class="txdiv">
+        <table class="table table-striped table-bordered" cellpadding="0" cellspacing="0">
+            <tbody>
+            <tr>
+                <th colspan="3">
+                    <a class="hash-link" :href="$parent.getTxUrl(tx.txid)">{{tx.txid }}</a>
+                    <span class="pull-right">
+                        <span class="hidden-xs">(<%- LANG('交易费') %>:{{tx.fee || 0}} {{coin }} - <%- LANG('数据量') %>:{{tx.size }} bytes)</span> {{tx.timeStr }}
+                    </span>
+                </th>
+            </tr>
+            <tr>
+                <td class="hidden-xs" style="width: 500px;">
+                    <template v-if="!tx.inputs[0].address"><b><%- LANG('新挖出块的奖励(包含交易费)') %></b></template>
+                    <template v-else="">
+                        <template v-for="input,index in tx.inputs">
+                            <a class="hash-link" :href="$parent.getAddressUrl(input.address)" :style="input.address == hash?{color:'gray'}:''">{{input.address}}</a>(<span>{{input.val}} {{coin}}</span>)<br>
+                        </template>
+                    </template>
+                </td>
+                <td class="hidden-xs" style="vertical-align: middle;">
+                    <span class="" :style="tx.io == 'o' ? 'color:#5cb85c;' : 'color:#d75c33;'">==></span>
+                </td>
+                <td class="txtd">
+                    <template v-for="output,index in tx.outputs">
+                        <a class="hash-link" :href="$parent.getAddressUrl(output.address)" :style="output.address == hash?{color:'gray'}:''">{{output.address}}</a>-
+                        <span v-if="output.n == 1" style="color: red"><%- LANG('已动用') %></span>
+                        <span v-if="output.n == 0" style="color: green"><%- LANG('未动用') %></span>
+                        <span class="pull-right"> <span>{{output.val }} {{coin }}</span> </span><br>
+                    </template>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span class="pull-right">
+                        <button v-if="!tx.confirmations" class="btn btn-danger"><%- LANG('交易未确认') %></button>
+                        <button v-if="tx.confirmations" class="btn btn-primary">{{tx.confirmations }} <%- LANG('确认') %></button>
+                        <button class="btn" :class="tx.io == 'o' ? 'btn-success' : 'btn-danger'"><span>{{tx.io == 'i' ? '-' : ''}} {{camount}} {{coin }}</span></button>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
+
+<script>
+    Vue.component('tx-info', {
+        template: "#tx-info",
+        props: {
+            coin : {
+                type : String,
+                default : 'UBTC'
+            },
+            hash : {
+                type : String,
+                default : ''
+            },
+            tx: {
+                type: Object,
+                default: function(){
+                    return {};
+                }
+            },
+            full: {
+                type: Boolean,
+                default: false
+            }
+        },
+        data: function () {
+            return {
+
+            }
+        },
+        computed: {
+            camount : function () {
+                var result = '',
+                    inputLen = this.tx.inputs.length,
+                    outputLen = this.tx.outputs.length,
+                    _this = this;
+                if(!_this.tx.outamount){
+                    return '';
+                }
+                if(_this.hash == ''){
+                    return _this.tx.outamount ;
+                }
+
+                result = _this.tx.outamount;
+
+                if(inputLen){
+                    for(var i = 0; i < inputLen; i++){
+                        if(_this.tx.inputs[i].address ==  _this.hash){
+                            result = _this.tx.inputs[i].val;
+                        }
+                    }
+                }
+                if(outputLen > 0){
+                    for(var i = 0; i < outputLen; i++){
+                        if(_this.tx.outputs[i].address ==  _this.hash){
+                            result = _this.tx.outputs[i].val;
+                        }
+                    }
+                }
+                return result ;
+            }
+
+        },
+        methods: {
+
+        },
+        created : function () {
+
+        },
+        watch: {
+
+        },
+        update : function () {
+
+        },
+        mounted: function() {
+
+        },
+        beforeUpdate: function() {
+
+        },
+        beforeDestroy: function() {
+
+        }
+    });
+</script>

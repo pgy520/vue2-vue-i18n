@@ -1,0 +1,88 @@
+<div class="tutorial">
+<div class="ub-banner" style="background: url('/src/images/home/banner1.jpg') no-repeat center center / cover;padding-bottom: 130px;">
+    <h2><%- LANG('钱包使用教程') %></h2>
+    <div class="tab">
+        <ul>
+            <li class="active"><a href="/tutorial/qt"><%- LANG('使用UnitedBitcoin-Qt')%></a></li>
+            <li><a href="/tutorial/electrum"><%- LANG('使用electrum')%></a></li>
+        </ul>
+    </div>
+</div>
+<div class="ub-main">
+    <div class="ub-container">
+        <div class="tutorial-content">
+            <h1><%- LANG('基本流程') %></h1>
+            <p><%- LANG('参考下图，大体流程就是下载并使用QT的钱包导入比特币的私钥，等区块同步完成就可以看到领取的UB，并可以进行转账。') %></p>
+            <div class="step">
+                <div class="step-item"><p><i class="ub-icon ub-download2"></i><%- LANG('下载钱包') %></p></div>
+                <div class="step-item"><p><i class="ub-icon ub-date"></i><%- LANG('设置数据目录') %></p></div>
+                <div class="step-item">
+                    <div class="btc">
+                        <ul>
+                            <li><i class="ub-icon ub-btc"></i><%- LANG('比特币core') %></li>
+                            <li><i class="ub-icon ub-btc"></i><%- LANG('比特币轻钱包') %></li>
+                        </ul>
+                        <span><%- LANG('导出私钥') %></span>
+                        <em></em>
+                    </div>
+                    <p><i class="ub-icon ub-key"></i><%- LANG('导入私钥') %></p>
+                </div>
+                <div class="step-item"><p><i class="ub-icon ub-sync"></i><%- LANG('同步数据') %></p></div>
+                <div class="step-item"><p><i class="ub-icon ub-ub"></i><%- LANG('使用UB') %></p></div>
+            </div>
+            <h1><%- LANG('详细步骤') %></h1>
+            <p><%- LANG('本文假定用户是第一次领取UBTC，如果不是，下面的步骤涉及到私钥或钱包数据的，请注意备份。') %></p>
+            <h2><%- LANG('下载UB钱包') %></h2>
+            <p>
+                <a href="https://github.com/UnitedBitcoin/UnitedBitcoin/releases" target="_blank">https://github.com/UnitedBitcoin/UnitedBitcoin/releases</a>
+                <br>
+                <%- LANG('请通过以上链接下载最新版本的UB Qt钱包。') %>
+            </p>
+            <h2><%- LANG('启动钱包') %></h2>
+            <p><%- LANG('第一次启动请注意设置数据目录，UB是比特币的分叉，继承了比特币的全部区块数据，目前有超过160GB，请确保数据目录所在分区有足够的磁盘空间。') %></p>
+            <p><img style="width: 600px;" src="/src/images/qt/1.png"></p>
+            <p><%- LANG("选择合适的目录以后点击'OK'按钮，进入加载画面，稍等一会儿就会进入钱包主界面。") %></p>
+            <p><img style="width: 600px;" src="/src/images/qt/2.png"></p>
+            <h2><%- LANG('同步数据') %></h2>
+            <p><%- LANG('进入主界面后钱包自动开始同步数据。整个区块数据的同步需要较长的时间，期间不影响用户的操作，但是最好等最新的区块同步完成再进行转账操作。') %></p>
+            <p><img style="width: 600px;" src="/src/images/qt/3.png"></p>
+            <h2><%- LANG('导入私钥') %></h2>
+            <p><%- LANG('UB的所有代币均记录在对应的地址上，而一个私钥对应一个地址，因此私钥是操作UB最重要的信息。') %></p>
+            <h2><%- LANG('比特币QT钱包导出私钥') %></h2>
+            <p><%- LANG("比特币的qt钱包导出的钱包文件是一个以'.dat'结尾的文件。UB钱包兼容比特币的导出文件，因此恢复方式和比特币一样。只要先停止UB钱包，然后把备份文件更名为'wallet.dat'，并复制到数据目录下的'wallets'目录下，覆盖原有的文件。然后重新启动UB钱包，就可以看到导入的地址。") %></p>
+            <h2><%- LANG('其他轻钱包导出私钥') %></h2>
+            <p><%- LANG('轻钱包的实现方式比较多样，因此这里无法列出所有。本文以electrum为例，其他轻钱包可以借鉴，或者咨询钱包开发者。') %></p>
+            <p><%- LANG("首先，在electrum中选择'view'菜单下的'show addresses'项调出'addresses'窗口") %></p>
+            <p><img style="width: 250px;" src="/src/images/qt/4.png"></p>
+            <p><%- LANG("然后在地址上右键单击，选择'private key'") %></p>
+            <p><img style="width: 600px;" src="/src/images/qt/5.png"></p>
+            <p><%- LANG("此时可以从弹出窗口看到该地址对应的私钥") %></p>
+            <p><img style="width: 600px;" src="/src/images/qt/6.png"></p>
+            <p><%- LANG("把该私钥导入到UB钱包，下面的操作均是在UB钱包中进行。") %></p>
+            <p><%- LANG("首先通过菜单项'帮助'->'调试窗口'打开UB钱包的控制台。并输入命令导入私钥：") %></p>
+            <p><img style="width: 600px;" src="/src/images/qt/7.png"></p>
+            <p>
+                <%- LANG("命令格式为：") %>
+                <br>
+                <%- LANG("Imortprivkey [私钥] [账户] [rescan]") %>
+                <br>
+                <%- LANG("私钥必须输入，账户可以不输人，rescan标志输入'false'可以避免导入时扫描钱包。注意如果输入rescan标志，则账户也必须输入。如不知道用什么账户可以输入''表示默认账户。") %>
+            </p>
+            <p><%- LANG("导入私钥以后用validateaddress命令检查是否导入成功。该命令的参数为私钥对应的地址，可以从electrum钱包获取。") %></p>
+            <p><img style="width: 600px;" src="/src/images/qt/8.png"></p>
+            <p><%- LANG("此时私钥就导入成功了，等钱包数据完全同步以后，就能看到账户中有余额。") %></p>
+            <p>
+                <%- LANG("注意：") %>
+                <br>
+                <%- LANG("Electrum有时会使用其他的格式导出私钥，此时需要做一个转换才能被UB core钱包导入。这里提供一个小工具，可以帮助转换。其他轻钱包如果有无法导入的情况，也可以用这个工具尝试一下。") %>
+               <br>
+                <a href="https://github.com/UnitedBitcoin/electrum/releases/download/3.0.7/bitcointools.exe" target="_blank">https://github.com/UnitedBitcoin/electrum/releases/download/3.0.7/bitcointools.exe</a>
+                <br>
+                <%- LANG("可以从以上地址下载该工具，也可以从github直接下载python代码执行") %>
+                <br>
+                <a href="https://github.com/UnitedBitcoin/electrum/blob/master/scripts/bitcointools.py" target="_blank">https://github.com/UnitedBitcoin/electrum/blob/master/scripts/bitcointools.py</a>
+            </p>
+        </div>
+    </div>
+</div>
+</div>

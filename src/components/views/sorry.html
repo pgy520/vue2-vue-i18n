@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="copyright" content="Copyright &copy;<%= WEB.NAME %>">
+    <meta name="revisit-after" content="1 days">
+    <meta name="keywords" content="<%= WEB.KEYWORD %>">
+    <meta name="description" content="<%= WEB.DESCRIPTION %>">
+    <title><%= WEB.NAME %> - <%= WEB.TITLE %></title>
+    <link rel="shortcut icon" href="<%= STATIC %>/images/favicon/favicon.ico?<%= VERSION %>">
+    <style>
+        .upgrade {
+            text-align: center;
+            padding-top: 100px;
+            font-family: PingFangSC-Light, arial, 'hiragino sans gb', 'microsoft yahei ui', 'microsoft yahei', simsun, sans-serif;
+            color: #000;
+        }
+
+        .upgrade h3 {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .upgrade h3 span {
+            color: #4263f2;
+        }
+
+        .upgrade p.tip {
+            font-size: 14px;
+        }
+
+        .upgrade ul li {
+            display: inline-block;
+            padding: 30px;
+        }
+
+        .upgrade ul li a {
+            color: #000;
+        }
+
+        .upgrade ul li .logo {
+            width: 50px;
+        }
+        .upgrade ul li .logo img{
+            width: 50px;
+        }
+        .upgrade ul li p {
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function IEVersion() {
+            var userAgent = navigator.userAgent;
+            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1;
+            var isEdge = userAgent.indexOf("Edge") > -1 && !isIE;
+            var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+            if(isIE) {
+                var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                reIE.test(userAgent);
+                var fIEVersion = parseFloat(RegExp["$1"]);
+                if(fIEVersion == 7) {
+                    return 7;
+                } else if(fIEVersion == 8) {
+                    return 8;
+                } else if(fIEVersion == 9) {
+                    return 9;
+                } else if(fIEVersion == 10) {
+                    return 10;
+                } else {
+                    return 6;
+                }
+            } else if(isEdge) {
+                return 98;
+            } else if(isIE11) {
+                return 11;
+            }else{
+                return 99;
+            }
+        }
+        if(IEVersion() > 9){
+            top.location.href = '/'
+        }
+    </script>
+
+</head>
+<body>
+<div class="upgrade">
+    <% if(LAN == 'cn' || LAN == 'hk'){ %>
+        <h3>您的浏览器版本过低，不能支持UnitedBitcoin站点的新特性</h3>
+        <h3>为了您更好的体验UnitedBitcoin网站，推荐您使用<span>谷歌</span>或<span>火狐</span>浏览器</h3>
+        <p class="tip">如果您的电脑还未安装，请点击以下链接进行下载安装</p>
+    <% }else{ %>
+        <h3>Your browser version is too low to support the new features of the UnitedBitcoin site</h3>
+        <h3>For your better experience of UnitedBitcoin website, it is recommended that you use <span> Google </span> or <span> Firefox </span> browser</h3>
+        <p class="tip">If your computer is not installed, please click the link below to download and install it</p>
+    <% } %>
+    <ul>
+        <li>
+            <a href="https://www.google.com/chrome/index.html" target="_blank">
+                <div class="logo"><img src="/src/images/home/googlechrome.png"></div>
+                <p>Google Chrome</p>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">
+                <div class="logo"><img src="/src/images/home/firefox.png"></div>
+                <p>Firefox</p>
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

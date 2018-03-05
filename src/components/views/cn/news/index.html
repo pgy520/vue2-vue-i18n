@@ -1,0 +1,31 @@
+<div class="ub-banner" style="background: url('/src/images/home/banner1.jpg') no-repeat center center / cover;">
+    <h2><%- LANG('News') %></h2>
+</div>
+<div class="ub-main" id="ub-news">
+    <div class="ub-container">
+        <div class="ub-content">
+            <div class="news-list" :class="{'loading loading-light-bg' : !newsList}">
+                <div class="item" v-for="news,index in newsList" :style="index % 2 == 0 ? 'text-align: right;' : ''" v-if="news.active">
+                    <a class="img-a" :style="index % 2 == 1 ? 'left: auto; right: 0;' : ''" :href="'/news/detail?column='+ news.category +'&id=' + news.news_id" target="_self">
+                        <img :src="getNewImg(news.news_thumbnail)">
+                    </a>
+                    <div class="box">
+
+                        <a class="box-a" :href="'/news/detail?column='+ news.category +'&id=' + news.news_id" target="_self">
+                            <h3 :data-text="news.news_title">{{news.news_title}}</h3>
+                            <div class="date"><%- LANG('Published on') %> {{news.create_date}}</span></div>
+                            <p>{{news.news_desc}}</p>
+                        </a>
+
+                    </div>
+                </div>
+                    <div class="more-button">
+                        <button v-if="loading" type="button" style="width:100%" disabled="disabled">Loading...</button>
+                        <button v-if="!loading && pageCount < pageSize" type="button" style="width:100%" disabled="disabled">No More</button>
+                        <button v-if="!loading && pageCount >= pageSize" @click="getNewList" type="button" style="width:100%">Load More</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("app.news.html")%>

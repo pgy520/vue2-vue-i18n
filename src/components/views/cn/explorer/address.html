@@ -1,0 +1,72 @@
+<%-include( "common.html")%>
+<div class="ub-explorer" id="ub-explorer">
+    <div class="container" :class="{'loading loading-light-bg' : !addressInfo}">
+        <h3 class="bk-leftLine">{{coin}} <%- LANG('地址') %></h3>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <table class="table table-striped table-bordered">
+                    <tbody>
+                    <tr>
+                        <th colspan="2"><%- LANG('概览') %></th>
+                    </tr>
+                    <tr>
+                        <td><%- LANG('地址') %></td>
+                        <td>
+                            <a :href="getAddressUrl(addressInfo.hash)"><span class="break-word">{{addressInfo.hash}}</span></a>
+                        </td>
+                    </tr>
+                    <tr class="visible-desktop">
+                        <td><%- LANG('未确认余额') %></td>
+                        <td>
+                            <span style="color: red"><span>{{addressInfo.unamount > 0 ? addressInfo.unamount : 0.0 }} {{coin}}</span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%- LANG('最终余额') %></td>
+                        <td id="final_balance">
+                            <span style="color: green"><span>{{addressInfo.amount > 0 ? addressInfo.amount : 0.0}} {{coin}}</span></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <table class="table table-striped table-bordered">
+                    <tbody>
+                    <tr>
+                        <th colspan="2"><%- LANG('交易记录') %></th>
+                    </tr>
+                    <tr>
+                        <td><%- LANG('交易次数') %></td>
+                        <td id="n_transactions">{{addressInfo.times}}</td>
+                    </tr>
+                    <tr>
+                        <td><%- LANG('总计收款') %></td>
+                        <td id="total_received">
+                            <span style="color: green"><span>{{addressInfo.receive > 0 ? addressInfo.receive : 0.0}} {{coin}}</span></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="bk-leftLine"><%- LANG('交易记录') %></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <template v-for="tx in addressInfo.txs">
+                    <tx-info :tx="tx" :hash="addressInfo.hash"></tx-info>
+                </template>
+                <div id="moreBtcDiv">
+                    <button v-if="loading" type="button" class="btn btn-primary btn-lg" style="width:100%" disabled="disabled">Loading...</button>
+                    <button v-if="!loading && pageCount < pageSize" type="button" class="btn btn-primary btn-lg" style="width:100%" disabled="disabled">No More</button>
+                    <button v-if="!loading && pageCount >= pageSize" @click="getAddressInfo" type="button" class="btn btn-primary btn-lg" style="width:100%">Load More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("app.explorer.html", {page : 'address'})%>

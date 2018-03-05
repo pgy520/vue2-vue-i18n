@@ -1,0 +1,129 @@
+<div class="ub-banner" style="background: url('/src/images/otc/bg.jpg') no-repeat center center / cover;">
+    <h2 style="text-transform: none;">UnitedBitcoin</h2>
+    <h2>场外交易专区</h2>
+</div>
+<div class="ub-otc" id="ub-otc">
+    <div class="otc-container">
+        <a href="#pay-box" class="suspension">快捷<br/>购买</a>
+        <div class="otc-box">
+            <h2>价格估算</h2>
+            <div class="trade-info">
+                <ul>
+                    <li>
+                        <h3>交易平台：</h3>
+
+                        <a href="https://www.zb.com" target="_blank"><img style="width: 90px;" src="/src/images/otc/zb_logo.png"/></a>
+                        <a href="https://www.zb.com/mobile/app" target="_blank">APP下载</a>
+                    </li>
+
+                    <li><h3>交易卖家：</h3>日照快易信息技术服务有限公司</li>
+                    <li><h3>实时市值：</h3>
+                        <p style="font-size: 18px;color: #000;margin-right: 10px;">{{rmbPrice?1:0}} UBTC = {{usdtPrice}}
+                            USDT</p> 折合人民币 <span style="color: #000;margin-left: 5px">{{rmbPrice}} RMB</span>
+                        <span v-if="!loading">
+                            <a href="javascript:;" @click="getNewPrice();" style="color: #fff;display:inline-block;margin-left:5px;font-size: 12px; padding: 5px;background: #00ccff;border-radius: 2px;">刷新</a>
+                        </span>
+                        <span v-else><a style="color: #fff;margin-left:5px;font-size: 12px; display:inline-block;padding: 5px;background: #00ccff;border-radius: 2px;">刷新</a></a></span>
+                        <a href="https://trans.zb.com/ubtcusdt">查看现价</a>
+                    </li>
+                    <li>
+                        <h3>购买说明：</h3>
+                        单次购买金额1~300万元 <input type="number" placeholder="输入购买金额" v-model="inputPrice"/> 元 ≈ {{ubtcPrice}} UBTC
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="otc-box">
+            <h2>购买流程</h2>
+            <div class="process">
+                <div class="process-item">
+                    <h4>第一步</h4>
+                    <p>注册zb账号，用于接收UBTC，<a href="https://www.zb.com/user/register" target="_blank" style="color: #00ccff;">点击前往</a></p>
+                    <p><a href="https://www.zb.com" target="_blank"><img style="width: 90px;" src="/src/images/otc/zb_logo.png"/></a></p>
+                    <!--<p>2、成功通过实名认证</p>
+                    <p class="desc">备注：平台大约24小时内完成实名认证审核</p>-->
+                </div>
+
+                <div class="process-item">
+                    <h4>第二步</h4>
+                    <p>1、微信、支付宝、网银转账到交易商家指定账号（请查看下面"<a href="#pay-box" style="color: #00ccff;">购买通道</a>"）</p>
+                    <p>2、转账备注填写自己的zb账号，如18688888888</p>
+
+                    <p>
+                        <img style="width: 300px; margin-right: 30px;" src="/src/images/wechat.jpg"/>
+                        <img style="width: 300px;" src="/src/images/alipay.jpg"/>
+                    </p>
+
+                    <p>3、转账成功后，请截图，用于第3步填写资料</p>
+
+
+                    <p>
+                        <img style="width: 300px;margin-right: 30px;" src="/src/images/wechat2.jpg"/>
+                        <img style="width: 300px;" src="/src/images/alipay2.jpg"/>
+                    </p>
+
+
+                    <p class="desc">备注：转账备注务必填写，以便商家即时处理；大约2小时内到账</p>
+                </div>
+
+                <div class="process-item">
+                    <h4>第三步</h4>
+                    <p>1、微信扫描以下二维码，填写相关资料和上传转账截图</p>
+                    <p><img style="width: 200px;" src="/src/images/upload.png"/></p>
+
+                    <p>2、商家收到转账和买家资料后，将向买家的zb账号充值对应的UBTC数量</p>
+                    <p class="desc">备注：买家务必完整填写相关资料，以便商家核实，加快充值效率，大约1小时内到账</p>
+                </div>
+                <div class="process-item">
+                    <h4>第四步</h4>
+                    <p>买家登录zb，查看UBTC持有量</p>
+                    <p><a target="_blank" style="display: inline-block;padding: 10px 20px; border-radius: 3px; background: #00ccff; color: #fff;" href="https://vip.zb.com/user/login">立即查看</a></p>
+                    <p id="pay-box"></p>
+                </div>
+            </div>
+        </div>
+        <div class="otc-box">
+            <h2>购买通道</h2>
+            <div class="pay-box">
+                <div class="item">
+                    <div class="code-img"><img style="width: 180px;" src="/src/images/otc/Wechat.png?<%= VERSION%>"/></div>
+                    <h4>WeChat 微信扫码支付</h4>
+                    <p>日照快易家居</p>
+                    <p class="desc">备注请填写您的zb账号</p>
+                </div>
+                <div class="item">
+                    <div class="code-img"><img style="width: 180px;" src="/src/images/otc/Ailpay.png"/></div>
+                    <h4>AliPay 支付宝扫码支付</h4>
+                    <p>日照快易信息技术服务有限公司</p>
+                    <p class="desc">备注请填写您的zb账号</p>
+                </div>
+                <div class="item">
+                    <div class="code-img"><img style="width: 200px;" src="/src/images/unionpay.png"/></div>
+                    <h4>UnionPay 网银通道</h4>
+                    <p>平安银行南京建康支行</p>
+                    <p>帐号：6230585098299999999</p>
+                    <p>收款人：白庚瓒</p>
+                    <p class="desc">备注请填写您的zb账号</p>
+                </div>
+            </div>
+        </div>
+        <div class="otc-box">
+            <h2>QQ交流群</h2>
+            <div class="qq-box">
+                <div class="item">
+                    <div class="code-img"><img src="/src/images/otc/qq_02.png"></div>
+                    <p>QQ群号：588494104</p>
+                </div>
+                <div class="item">
+                    <div class="code-img"><img src="/src/images/otc/qq_03.jpeg"></div>
+                    <p>QQ群号：690023294</p>
+                </div>
+                <div class="item">
+                    <div class="code-img"><img src="/src/images/otc/qq_04.jpeg"></div>
+                    <p>QQ群号：597689097</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("app.otc.html")%>

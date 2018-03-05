@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="<%= LAN %>">
+<head>
+    <%-include("include/headInit.html")%>
+    <%-include("include/headMeta.html")%>
+    <link href="<%= STATIC %>/styles/user.css?<%= VERSION %>" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <%-include("include/menuMain.html")%>
+    <div class="user-wrapper">
+    <% try{ %>
+        <%-include(templateMain)%>
+    <% }catch(err){ %>
+        <div class="alert alert-danger" role="alert">error:template file not find.</div>
+    <% } %>
+    </div>
+    <%-include("include/footInit.html")%>
+    <script src="/lib/others/intlTelInput.js?<%= VERSION %>" type="text/javascript"></script>
+    <script>
+
+        $("#phone").intlTelInput({
+            utilsScript: "../lib/others/utils.js"
+        });
+    </script>
+</body>
+</html>

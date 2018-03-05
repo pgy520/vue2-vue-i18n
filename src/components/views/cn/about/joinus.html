@@ -1,0 +1,84 @@
+<style>
+    @media (max-width:768px){
+        *{
+            touch-action:none;
+            -ms-touch-action:none;
+        }
+        .ub-content {
+            padding: 30px 0;
+        }
+        .ub-banner {
+            padding: 50px 0 50px 0;
+        }
+        .ub-banner h2 {
+            font-size: 18px;
+        }
+        /*.ub-content .content-text p {*/
+            /*line-height: 1.6;*/
+            /*margin-bottom: 15px;*/
+        /*}*/
+        /*.ub-content {*/
+            /*padding: 20px 0;*/
+        /*}*/
+    }
+    @media (max-width:320px){
+
+        .ub-content {
+            padding: 30px 0;
+        }
+        .ub-banner {
+            padding: 30px 0 30px 0;
+        }
+        .ub-banner h2 {
+            font-size: 18px;
+        }
+        .ub-content .content-text p {
+             line-height: 1.6;
+             margin-bottom: 15px;
+         }
+        .ub-content {
+            padding: 20px 0;
+        }
+    }
+</style>
+<div class="ub-banner" style="background: url('/src/images/home/banner3.jpg') no-repeat center center / cover;">
+    <h2><%- LANG('Join Us') %></h2>
+</div>
+<div class="ub-main">
+    <div class="ub-container">
+        <div class="ub-content">
+            <div class="content-text">
+                <p><%- LANG('At UnitedBitcoin, we do everything we can to build an exceptional team. If you are proactive, innovative, passionate, and smart, we want you! The opportunities are limitless to develop your career, and together we will make a difference to the blockchain ecosystem.') %></p>
+                <p><%- LANG('If you think you would be a good fit for our project, send your CV to hr@ub.com. We will contact you to discuss opportunities that might suit your profile.') %></p>
+                <ul style="display:none">
+                    <li><%- LANG('C/C++ programmer') %></li>
+                    <li><%- LANG('Go Language engineer') %></li>
+                    <li><%- LANG('Engineer with language development capabilities') %></li>
+                    <li><%- LANG('IDE development engineer') %></li>
+                    <li><%- LANG('DB expert') %></li>
+                    <li><%- LANG('Regional Operations CEO') %></li>
+                </ul>
+            <h3 style="display:none"><%- LANG('Contact Form') %></h3>
+            <div style="display:none" class="join-form" id="app-join">
+              <input placeholder="<%- LANG('Name') %>" type="text" v-model="name">
+                <div class="select">
+                  <select v-model="job">
+                      <option value=""><%- LANG('Please Select Job') %></option>
+                      <option value="C/C++ programmer"><%- LANG('C/C++ programmer') %></option>
+                      <option value="Go Language engineer"><%- LANG('Go Language engineer') %></option>
+                      <option value="Engineer with language development capabilities"><%- LANG('Engineer with language development capabilities') %></option>
+                      <option value="IDE development engineer"><%- LANG('IDE development engineer') %></option>
+                      <option value="DB expert"><%- LANG('DB expert') %></option>
+                      <option value="Regional Operations CEO"><%- LANG('Regional Operations CEO') %></option>
+                  </select>
+                </div>
+                <input placeholder="<%- LANG('Email') %>" type="text" v-model.trim="email">
+                <input placeholder="<%- LANG('Phone') %>" type="text" v-model="phone">
+                <textarea placeholder="<%- LANG('Comments') %>" v-model="comments"></textarea>
+                <a @click="doSubmit" role="button" class="button"><%- LANG('Submit') %></a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("app.join.html", {type : 0})%>

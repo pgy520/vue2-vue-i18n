@@ -1,0 +1,152 @@
+<div class="container">
+            <div class="ub-content ub-whitepaper">
+                <h1><%- LANG('White Paper') %></h1>
+                    <div class="explain">
+                        <span>Terminology</span>
+                        <p>UB:Abbreviation of the basic currency of UnitedBitcoin, and also abbreviation of UnitedBitcoin, official website: WWW.UB.COM</p>
+                    </div>
+                    <h2><span>Part One:</span>Abstract</h2>
+                <div class="ub-text">
+                    <p>As an excellent representative of digital currencies, Bitcoin brings irreversible transaction implementation and decentralized consensus to the world. Bitcoin’s price – which recently topped US$16,000 – reflects its value as a disruptive technology, a store of value, and a medium of exchange. Even with the advent of numerous altcoins, Bitcoin has remained dominant in the space and has found increased legitimacy in the eyes of traditional markets through futures trading.</p>
+                    <p>Bitcoin is the best example of applied blockchain technology. It was started and initially adopted by technology enthusiasts and is now spreading over the whole world.</p>
+                    <p>Bitcoin’s functions as a currency, however initially Bitcoin’s value was extremely low. Consequently, people did not take the necessary security precautions. While technically these Bitcoin haven’t gone anywhere, in practice they lower the circulating supply of Bitcoin. Without private keys these coins are locked away, unable to be reclaimed.</p>
+                    <p>While this is deflationary and has driven Bitcoin’s price up, it is not enough for further development. Its high price, high transaction costs and low quantity of available bitcoin’s limit’s its further development.</p>
+                    <p>The mission of UnitedBitcion is to find a purpose for lost Bitcoin and inactive wallets and create a stable cryptocurrency system through an association of joint credit and smart contracts.</p>
+                    <p>UnitedBitcoin will use the pressure-tested mechanics of Bitcoin, such as PoW, blocktimes, supply cap, and issuance model, while it upgrades areas to accommodate for larger social demands. These improvements will be an increase in blocksize to 8mb, the addition of smart contract support based on UVM, the addition of Lightning Network support, and SegWit implementation.</p>
+                </div>
+                    <h2><span>Part Two:</span>Operating Model</h2>
+                <div class="ub-text">
+                    <p>UnitedBitcoin will fork away from the Bitcoin network, and immediately improve its protocol in the new network. All active Bitcoin addresses will receive corresponding balances on UnitedBitcoin’s chain. Balances of inactive addresses will be collected and used to serve the community.</p>
+                    <p>30% of the inactive balances will be distributed to other technologically influential communities in the crypto-currencies space to further increase the influence and adoption of UnitedBitcoin.</p>
+                    <p>70% of the inactive balances will be reserved as collateral to issue stable tokens pegged to chosen fiat currencies, similar to a Gold Standard. However, unlike a Gold Standard whose mint ratio (the fixed exchange rate between gold and dollar value) tends to overvalue gold, UnitedBitcoin Standard is designed to keep the reserve UB value over collateralized against the value of the issued pegged tokens. The ratio is targeted to be around 3 : 1, i.e. for every UB reserved, we can only issue fiat-pegged tokens, a.k.a. stable tokens, up to 33.3% of one UB’s market value. If the market price of UB increases then it provides more value capacity to issue more stable tokens, but no new stable tokens are necessarily to be issued; if the market price of UB decreases that the value of stable tokens breaches the 33.3% of the value of the reserved UB, then it’s compulsory that the stable tokens are required to buy back until the 33.3% safe line is satisfied. This is similar to how the Federal Reserve interacts with US Dollar liquidity.</p>
+                    <p>The stable tokens, backed by UB reserves, is intended for use in in global trade or large-scale projects which may result in a greatly enhanced ease of use and popularity of UnitedBitcoin’s systems.</p>
+                    <p>UnitedBitcoin is set to become a truly global savings union of joint credit. The new smart contract functionality based on PoW will also provide infinite possibilities to UnitedBitcoin.</p>
+
+                    <p style="margin-top: 30px;" class="img-w"><img src="<%= STATIC%>/images/home/OperatingModel.png"></p>
+                </div>
+                    <h2><span>Part Three:</span>Technical Solution</h2>
+                <div class="ub-text">
+                    <p>While Bitcoin is by far the most secure and most dominant crypto-currency, it also has some imperfections – mostly, because it was the first.</p>
+                    <p>UnitedBitcoin will use the pressure-tested mechanics of Bitcoin, such as PoW, blocktimes, supply cap, and issuance model, while it upgrades areas to accommodate for larger social demands.</p>
+                </div>
+
+                    <h3>UTXO Data Model</h3>
+                    <p>Over the last nine years, the UTXO data model used in Bitcoin has proven to be a very reliable means to create a stable and reliable digital currency.  The most important function of a currency is medium-of-exchange and the UTXO model does this wonderfully. Inheriting this through the fork is of utmost importance.</p>
+                    <h3>SHA256 PoW Mining Model</h3>
+                    <p>UnitedBitcoin keeps the mining algorithm of Bitcoin. Although energy consumption is a concern with PoW (Proof of Work), it has a very solid track record and has demonstrated to be very secure.</p>
+
+                    <h3>Total quantity and block Time</h3>
+                    <p>UnitedBitcoin is a fork of Bitcoin and inherits its block-time, halving time and total number of Bitcoin’s cap (21 million). These properties remain unchanged.</p>
+
+
+                        <h3>Segregated Witness / SegWit</h3>
+                <div class="ub-text">
+                        <p>SegWit is the data structure improvement that puts digital signatures of TX_IN and TX_OUT outside the transaction. This solves the problem of transaction extensibility and eases the problem of block size limits. It enhances on-chain scalability.</p>
+                        <p>Before implementation of SegWit, the structure of the chainblock is as follows:</p>
+                        <p class="img-w"><img src="<%= STATIC%>/images/home/IsolationVerification1.svg"></p>
+                        <p class="img-w">After implementation of SegWit, the structure of the chainblock is as follows:</p>
+                        <p class="img-w"><img src="<%= STATIC%>/images/home/IsolationVerification2.svg"></p>
+                </div>
+                        <h3>On-chain Scalability</h3>
+                <div class="ub-text">
+                        <p>Bitcoin’s current maximum TPS is about 7 transactions per second. This does not accommodate the network’s needs at time, and therefore cannot begin to approach the needs of global transaction volume.</p>
+
+                        <p>The implementation of SegWit mentioned earlier alleviates some of this, but only to a limited extent. Increasing the block-size will result in a much larger alleviation and provide significant room to grow, however requires a hard-fork. Hence UnitedBitcoin is taking this opportunity to increase the block size as well.</p>
+                        <p>Increasing the block-size and scaling will increase storage- and network requirements, however considering most nodes and ran by mining pools or companies we believe this isn’t too much of a constraint and 8 MB is an appropriate value.</p>
+                </div>
+
+                        <h3>Replay protection</h3>
+                        <p>Because UnitedBitcoin is a fork of Bitcoin, we must ensure that transactions on one chain cannot be replayed on another chain. UnitedBitcoin implements replay protection by introducing new transaction signatures. New SigHash types will also improve the overall security of the network.</p>
+
+                        <h3>Asset Activation</h3>
+                <div class="ub-text">
+                    <p>After the fork, all active addresses on the Bitcoin network will receive equivalent balances on the UnitedBitcoin network.</p>
+                    <p>Inactive addresses are addresses without activity since block height #494000 (November 11, 2017) and as a result didn't automatically receive UBTC during phase 1 of the asset allocation procedure.</p>
+                </div>
+                        <h3>Smart Contracts</h3>
+                <div class="ub-text">
+                        <p>UnitedBitcoin’s smart contracts allows users to write customized behaviors and use them in the blockchain, rather than having to do several (manual) predefined operations. By using smart contracts, users can easily configure complex transaction logic, as well as execute complex financial contracts. At the same time, users can extend functionality, add restrictions or add dynamic controls without modifying or upgrading the blockchain.</p>
+                        <p>Smart contracts allow users to register customized contract bytecode in the blockchain and invoke transactions in UnitedBitcoin’s chain. The bytecode is executed in a Turing-complete virtual machine for blockchain.</p>
+                        <p>Developers can write smart contracts using a programming language with friendly syntax, which is then compiled into contract bytecode and stored in the blockchain.</p>
+                        <p>Each wallet of UnitedBitcoin synchronizes the blockchain to a block with contract transactions, and invokes a virtual machine to perform the relevant contract bytecode and verify.</p>
+                </div>
+                            <h4>Types of Contract Transactions</h4>
+                <div class="ub-text">
+                            <p>The ScriptPubKey lock script area of the transaction can increase the contract related operators to trigger the registration contract, invoke the contract, upgrade the contract, and/or cancel the contract. Transactions with these operators will trigger the smart contract virtual machine to perform the associated contract bytecode.</p>
+                            <p>The operator of the registration contract will execute the contract bytecode to register on the chain as a new smart contract, and once successful a new smart contract address will be assigned.</p>
+                            <p>The operator that invokes the contract invokes the smart contract on a chain, executes the corresponding bytecode, and generates certain execution results, such as transfer or contract status changes.</p>
+                            <p>The operator of the upgrade contract can assign a unique name to an un-upgraded and unwritten contract on the block chain, and mark the contract as un-cancellable. This smart contract is invoked by the user or other contract by the contract name.</p>
+                            <p>The operator of the logout contract can mark an un-upgraded and unwritten contract on the user-created block chain as cancelled. The cancelled contract will not disappear from the block chain, but cannot be called again, only the relevant historical data can be queried.</p>
+                </div>
+                            <h4>Contract Virtual Machine</h4>
+                <div class="ub-text">
+                            <p>Contract virtual machine uses Turing-complete virtual machine for implementation, the contract virtual machine has a high performance, is scalable and can interact with the UnitedBitcoin blockchain, it can enforce bytecode of smart contracts and return the results.</p>
+                            <p>The contract virtual machine of UnitedBitcoin has the characteristics of definitiveness, and the same results can be found at any time after the transaction of a contract is recorded on the blockchain, which can be verified and reinstated.</p>
+                            <p>The contract virtual machine uses the account model to carry out value transfer, which makes it more user-friendly to developers in the preparation of smart contracts, and the UTXO transaction model of UnitedBitcoin Chain is passed through the account abstraction layer.</p>
+                            <p>Developers can use a variety of high-level programming languages for smart contracts development, and compile and generate contract bytecode to be stored in UnitedBitcoin’s blockchain.</p>
+                            <p>After weighing different options, UnitedBitcoin has decided to adopt UVM virtual machine which is based on improvements of LUA, and subsequently supports the simulated languages similar to C#, Java and EVM and other types of virtual machines will be added in the future to achieve the most extensive technical community support. UVM is one of the most efficient virtual machines, and its underlying language has been used for years in practical applications.</p>
+                            <p>In terms of security, UVM will remove some functionality such as external IO. In terms of stability, the UVM financial dual-process ensures the feature of exits from abnormal processes and continual executions.</p>
+                </div>
+                            <h4>Mechanism of Gas</h4>
+                <div class="ub-text">
+                            <p>The implementation of smart contracts requires gas, which is the economic cost of implementing smart contracts, and gas in UnitedBitcoin’s Chain uses system base tokens UB. Through the gas mechanism, it increases the cost of attacking the blockchain through a large number of sending contracts, and pays for the implementation of the smart contract for the block chain ecosystem.</p>
+                            <p>Different contract calls require a different amount of gas, depending on the number of contract bytecode instructions and the types of instructions in the execution process.</p>
+                            <h4>Contract State Storage</h4>
+                            <p>Each smart contract has an isolated storage area for housekeeping and to record the status data of this smart contract. When the contract is executed, it can modify or query the storage of the contract. Changes to the storage can only be submitted to the blockchain if execution succeeds. When retroversion of a block of blockchain occurs, the storage of the contract needs to revert back to the state of the past, depending on the history of the storage.</p>
+                            <p>The functions of the smart contract virtual machine are as follows:</p>
+                            <p class="img-w"><img src="<%= STATIC%>/images/home/ContractStateStorage.svg"></p>
+                </div>
+
+
+
+
+                            <h4>Contract Books</h4>
+                            <p>Each smart contract has a contract address, and the contract address can possess blockchain assets and receive transfers.  During contract execution, in the event of a contract transfer to another address, transactions arising from a contract transfer to another address following the execution of a contract call are called results transactions. The result transaction's ScriptPubKey lock script region contains scripts from contract transfers to other addresses. The assets of the contract address are transferred out of contract execution and consensus, without the need for a private key to sign the behavior of the contract address asset.</p>
+
+
+
+
+                        <h3>Lightning Network</h3>
+                <div class="ub-text">
+                        <p>Currently, the Bitcoin network mines blocks once every ten minutes. This means that the fastest a transaction between two parties can take place is ten minutes, but to ensure this users have to pay higher fees – which can be excessive due to network congestion. Often, users need to wait even longer for their transactions to confirm if they did not want to pay the highest fees – or worse, transactions are abandoned. This makes quick transfers virtually impossible on the Bitcoin network. A solution to this – along with the SegWit implementation and larger blocksizes mentioned above – is something called the Lightning Network. The Lightning Network is an off-chain payment channel which parties can set up for near-instant transactions with low to no fees. These secure, and the only time these transactions go on-chain are when parties enter or leave contracts.</p>
+                        <p>Features of Lightning Network:</p>
+                </div>
+                            <h4>Direct transactions</h4>
+                            <p>In the current BTC network, the user-initiated transactions need to be packaged to chainblocks and broadcast to the network to be confirmed by each node. However in the lightning network, authentication process is not needed, and the transaction is made directly with the counterpart.</p>
+                            <h4>Micro-transactions</h4>
+                            <p>In the BTC network, when the user makes the transfer, the amount of the transfer needs to be higher than the minimum value. In the lightning network, there is no such restriction, and the user can create the transaction freely.</p>
+                            <h4>Scalability</h4>
+                            <p>In the BTC network, to broadcast the block transactions, the number of transactions carried in each block is limited because of the bandwidth reason, however in the lightning network, there is no restriction on the number of transactions,  and the user can send huge amounts of data in a certain time period.</p>
+                            <h4>Implementation mode</h4>
+                <div class="ub-text">
+                            <p>Both parties participating in the transaction need to create a 2/2 multisignature address as a transaction channel, and deposit a relevant amount in the channel. The Transaction between both parties is actually a consensus on the amount of the multisignature address. After the last consensus, the transaction between the two parties ends and the final amount of the two parties will be determined. The transaction between the two parties will not be recorded on the chain.</p>
+                            <p class="img-w"><img src="<%= STATIC%>/images/home/Implementationmode.svg"></p>
+                </div>
+                        <h3>Technical Plan</h3>
+                        <p>12 December 2017: Fork of Bitcoin to UnitedBitcoin (at block height: #498,777) with support for:</p>
+                        <div class="indentation">
+                        <p>I. Increased block-size to 8MB</p>
+                        <p>II. SegWit support</p>
+                        <p>III. Replay Protection</p>
+                        <p>IV. Asset Allocation</p>
+                        </div>
+
+                        <p>January 3, 2018:</p>
+                        <div class="indentation">
+                        <p>V. End of Asset Allocation phase #2</p>
+                        <p>VI. Pegged currency based on color currency</p>
+                        </div>
+
+                        <p>February 28, 2018:</p>
+                    <div class="indentation">
+                        <p>VII. Launch of smart contract support</p>
+                    </div>
+
+                        <p>April 28, 2018:</p>
+                    <div class="indentation">
+                        <p>VIII. Launch of Lightning Network support</p>
+                    </div>
+
+
+</div>
+</div>

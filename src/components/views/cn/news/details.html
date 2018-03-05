@@ -1,0 +1,17 @@
+<div class="ub-banner" style="background: url('/src/images/home/banner1.jpg') no-repeat center center / cover;">
+    <h2><%- LANG('News') %></h2>
+</div>
+<div class="ub-main" id="ub-news">
+    <div class="ub-container">
+        <div class="ub-content">
+            <div class="news-details" :class="{'loading loading-light-bg' : !newsDetail}">
+                <h3>{{newsDetail.news_title}}</h3>
+                <div class="date"><%- LANG('Published on') %> {{newsDetail.create_date}}</div>
+                <img v-if="newsDetail.news_thumbnail_show == 1 && newsDetail.news_thumbnail != ''" :src="getNewImg(newsDetail.news_thumbnail)"style="margin: 15px auto; border-radius: 15px;">
+                <div class="news-info" v-html="decodeURIComponent(newsDetail.news_content)">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("app.news.html")%>

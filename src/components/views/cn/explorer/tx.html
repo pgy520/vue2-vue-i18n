@@ -1,0 +1,95 @@
+<%-include("common.html")%>
+<div class="ub-explorer" id="ub-explorer">
+    <div class="container" :class="{'loading loading-light-bg' : !txInfo}">
+        <h3 class="bk-leftLine"><%- LANG('交易') %> <small><%- LANG('交易的相关信息') %></small></h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <tx-info :tx="txInfo" :full="true" v-if="txInfo"></tx-info>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="bk-leftLine"><%- LANG('交易信息摘要') %></h3>
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td width="100"><%- LANG('数据量') %></td>
+                        <td>{{txInfo.size}} (bytes)</td>
+                    </tr>
+                    <tr>
+                        <td><%- LANG('接收时间') %></td>
+                        <td>{{txInfo.timeStr}}</td>
+                    </tr>
+                    <tr>
+                        <td><%- LANG('接纳区块') %></td>
+                        <td>
+                            <a :href="getBlockUrl(txInfo.blockhash)">
+                                <span class="break-word">{{txInfo.blockhash}}</span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <h3 class="bk-leftLine"><%- LANG('转入与转出') %></h3>
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td width="100"><%- LANG('总转出额') %></td>
+                        <td>{{txInfo.outamount}} {{coin}}</td>
+                    </tr>
+                    <tr>
+                        <td><%- LANG('交易费') %></td>
+                        <td>{{txInfo.fee || 0}} {{coin}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <template v-if="txInfo.inputs && txInfo.inputs.length && txInfo.inputs[0].coinbase">
+                <div class="col-sm-12">
+                    <h3 class="bk-leftLine">Coinbase</h3>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td><span class="break-word">{{txInfo.inputs[0].coinbase}}</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="break-word">(<%- LANG('已解码') %>){{txInfo.inputs[0].jcoinbase}}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+
+            <template v-if="txInfo.inputs && txInfo.inputs.length && !txInfo.inputs[0].coinbase">
+                <div class="col-sm-12" style="overflow-x: auto;">
+                    <h3 class="bk-leftLine"><%- LANG('转入脚本') %></h3>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr v-for="input in txInfo.inputs">
+                                <td><span class="break-word" style="word-break: break-all; word-wrap:break-word;">{{input.hex}}</span></td>
+                                <td><span class="label label-success"><%- LANG('确认') %></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+
+            <div class="col-sm-12">
+                <h3 class="bk-leftLine"><%- LANG('转出脚本') %></h3>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr v-for="output in txInfo.outputs">
+                            <td><span class="break-word" style="word-break: break-all; word-wrap:break-word;">{{output.hex}}</span></td>
+                            <td><span class="label label-success"><%- LANG('确认') %></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("app.explorer.html", {page : 'tx'})%>

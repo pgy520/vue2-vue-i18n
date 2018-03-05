@@ -1,0 +1,57 @@
+<%-include("common.html")%>
+<div class="ub-explorer" id="ub-explorer">
+    <div class="container" :class="{'loading loading-light-bg' : !blockList}">
+        <div class="time-choice" v-if="blockList" style="margin-bottom: 15px;">
+            <div class="content">
+            <a :href="getBlockListUrl(getDateParm('-'))" class="arrow arrow-left" title="<%- LANG('前一天') %>"></a>
+            <p>{{showDate(date)}}<span>({{blockList.length}})</span></p>
+            <a :href="getBlockListUrl(getDateParm('+'))" class="arrow arrow-right" title="<%- LANG('后一天') %>"></a>
+            </div>
+        </div>
+        <div class="site-choice" style="display: none">
+            <a class="on" role="button">ALL</a>
+            <a role="button">BW.COM</a>
+            <a role="button">BW.COM</a>
+            <a role="button">BW.COM</a>
+            <a role="button">BW.COM</a>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-striped table-bordered" id="blockDiv">
+                    <thead>
+                    <tr>
+                        <th><%- LANG('高度') %></th>
+                        <th><%- LANG('时间') %></th>
+                        <th><%- LANG('播报方') %></th>
+                        <th class="hidden-xs"><%- LANG('哈希值') %></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="block in blockList" v-if="blockList">
+                        <td>
+                            <a :href="getBlockUrl(block.height)">{{block.height}}</a>
+                            <span v-if="!block.rpoolname" style="color: #15bf81">(<%- LANG('主链') %>)</span>
+                            <span v-if="block.rpoolname" style="color: red">(<%- LANG('孤立') %>)</span>
+                        </td>
+                        <td>{{block.showTime}}</td>
+                        <td>
+                            <template v-if="!block.rpoolname">
+                                <a :href="getBlockListUrl(date, block.poolname)"> {{block.poolname}} </a>
+                            </template>
+                            <template v-if="block.rpoolname">
+                                <a :href="getBlockListUrl(date, block.rpoolname)"> {{block.rpoolname}} <span style="color: red">(<%- LANG('孤立') %>)</span></a> /
+                                <a :href="getBlockListUrl(date, block.poolname)"> {{block.poolname}} </a>
+                            </template>
+                        </td>
+                        <td class="hidden-xs">
+                            <a :href="getBlockUrl(block.hash)"><span class="break-word">{{block.hash}}</span></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("app.explorer.html", {page : 'blocks'})%>

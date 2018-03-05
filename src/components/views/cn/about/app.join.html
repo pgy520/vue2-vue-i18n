@@ -1,0 +1,94 @@
+<script>
+    var app_join = new Vue({
+        el: '#app-join',
+        data: function () {
+            return {
+                type : "<%= type || 0%>",
+                email : '',
+                mail : '',
+                phone : '',
+                name : '',
+                job : '',
+                title : '',
+                txid : '',
+                comments : '',
+                lockRequest : false
+            }
+        },
+        methods : {
+            doSubmit : function () {
+                if(this.lockRequest){
+                    return JuaBox.info('Do not repeat the submission.')
+                }
+                if(this.name == ''){
+                    return JuaBox.info('Please enter your nickname.')
+                }
+                if(this.job == '' && this.type == 0){
+                    return JuaBox.info('Please select job.')
+                }
+                if(!Methods.isEmail(this.email) && this.type != 3){
+                    return JuaBox.info('Invalid e-mail address.')
+                }
+                if(!Methods.isEmail(this.mail) && this.type == 3){
+                    return JuaBox.info('Invalid e-mail address.')
+                }
+                if(this.phone.length < 6 && this.type != 3){
+                    return JuaBox.info('Invalid phone number.')
+                }
+                if((this.txid == '' || this.txid.length != 64) && this.type == 3){
+                    return JuaBox.info('Invalid txid.')
+                }
+                if(this.title == '' && this.type == 1){
+                    return JuaBox.info('Please enter title.')
+                }
+
+                var _this = this;
+                var url ;
+                if(this.type == 1){
+                    url = '/cooperation/addcooperation';
+                }else if(this.type == 2){
+                    url = '/cooperation/addcooperation';
+                    this.title = 'contact us'
+                }else if(this.type == 3){
+                    url = '/ubtcorder/addorder';
+                }else{
+                    url = '/job/addjob';
+                }
+                _this.lockRequest = true;
+                Methods.ajax({
+                    type: 'POST',
+                    data: {
+                        email : _this.email,
+                        mail : _this.mail,
+                        txid : _this.txid,
+                        phone : _this.phone,
+                        name : _this.name,
+                        job : _this.job,
+                        title : _this.title,
+                        comments : _this.comments
+                    },
+                    url: DOMAIN_MAIN + '/portals' + url,
+                    success: function(res) {
+                        _this.lockRequest = false;
+                        _this.email = '';
+                        _this.mail = '';
+                        _this.txid = '';
+                        _this.phone = '';
+                        _this.name = '';
+                        _this.job = '';
+                        _this.title = '';
+                        _this.comments = '';
+                        JuaBox.info('Submitted successfully.');
+                    },
+                    error : function () {
+                        _this.lockRequest = false;
+                    }
+                });
+            }
+        },
+        created : function () {
+        },
+        mounted : function () {
+        }
+    })
+</script>

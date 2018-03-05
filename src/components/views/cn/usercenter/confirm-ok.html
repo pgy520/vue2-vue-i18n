@@ -1,0 +1,18 @@
+<div class="user-center">
+    <div class="container">
+        <h1 style="color: #00be28"><%- LANG('UB已收到您的申请。') %></h1>
+        <div class="prompt"><%- LANG('我们会尽快核对所有比特币地址，并于2月15日开始分发UBTC。我们会以邮件方式通知合资格申请者进行下一步操作，请留意您的注册邮箱。如有疑问，请发送邮件到support@ub.com。感谢您的耐心等候与关注！') %></div>
+        <div class="button" style="margin-top: 40px;"><a href="/u/claims" role="button"><%- LANG('继续申领') %></a></div>
+        <p style="margin-top: 15px;color:#555555"><%- LANG('如果您有更多的地址需要申领UBTC,请点击此处')%></p>
+    </div>
+</div>
+<script>
+    $(function(){
+        $(document).ready(function(){
+            if(!window.sessionStorage.getItem("mail"))
+            {
+                window.location="/user/login";
+            }
+        })
+    })
+</script>

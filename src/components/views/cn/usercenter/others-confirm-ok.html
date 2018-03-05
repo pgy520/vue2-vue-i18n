@@ -1,0 +1,18 @@
+<div class="user-center">
+    <div class="container">
+        <h1 style="color: #00be28"><%- LANG('UB已收到您的申请。') %></h1>
+        <div class="prompt"><%- LANG('我们会尽快核对您的持币地址，并于每月1日生成快照，您可从用户中心提取您的UBTC.') %></div>
+        <div class="button" style="margin-top: 40px;"><a href="/u/others" role="button"><%- LANG('继续申领') %></a></div>
+        <p style="margin-top: 15px;color:#555555"><%- LANG('如果您有更多的地址需要申领UBTC,请点击此处')%></p>
+    </div>
+</div>
+<script>
+    $(function(){
+        $(document).ready(function(){
+            if(!window.sessionStorage.getItem("mail"))
+            {
+                window.location="/user/login";
+            }
+        })
+    })
+</script>

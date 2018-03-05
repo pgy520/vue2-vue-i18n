@@ -1,0 +1,24 @@
+<div class="entrance-container">
+    <h2><%- LANG('修改登录密码') %></h2>
+    <div class="form-content">
+        <div class="form-prompt"><p><%- LANG('请输入您的登录邮箱和邮箱验证码，以便我们识别您的身份。') %></p></div>
+        <div class="form-grid">
+            <input placeholder="<%- LANG('邮箱') %>" type="text">
+        </div>
+        <div class="form-grid">
+            <input placeholder="<%- LANG('邮箱验证码') %>" type="text">
+            <a role="button" class="code-button"><%- LANG('获取验证码') %></a>
+        </div>
+    <button type="submit" role="button"><%- LANG('下一步') %></button>
+    </div>
+    <div class="form-content">
+        <div class="form-grid">
+            <input autocomplete="new-password" placeholder="<%- LANG('新密码') %>" type="password">
+        </div>
+        <div class="form-grid">
+            <input autocomplete="new-password" placeholder="<%- LANG('确认新密码') %>" type="password">
+        </div>
+        <button type="submit" role="button"><%- LANG('提交') %></button>
+    </div>
+    <div class="switch"><a href="/user/login"><%- LANG('返回登录') %></a></div>
+</div>

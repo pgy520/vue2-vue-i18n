@@ -1,0 +1,99 @@
+<style>
+    @media screen and (max-width: 768px){
+        .user-center h1{
+            font-size:20px;
+        }
+        .choose-service{
+            margin-top:30px;
+        }
+        .choose-service a[link*="a-"] {
+            padding: 15px 0;
+            font-size: 15px;
+
+        }
+        .choose-service .grid {
+            margin: 0 5px;
+        }
+        .choose-service .grid>a+a{
+            font-size:12px;
+        }
+    }
+</style>
+<div class="user-center" id="service_area">
+    <div class="container">
+        <h1><%- LANG('请选择您需要的服务') %></h1>
+        <div class="choose-service">
+            <div class="grid">
+                <a href="confirm" link="a-true" role="button" v-if="btcusercanclaim"><%- LANG('比特币(BTC)用户逾期领取UBTC申请') %></a>
+                <a href="javascript:;" link="a-false" role="button" v-if="!btcusercanclaim"><%- LANG('比特币(BTC)用户逾期领取UBTC申请') %></a>
+                <a role="button" :href="newsMap[LAN]" target="_blank"><%- LANG('宽限期详情') %></a>
+            </div>
+            <div class="grid">
+                <!--<a href="javascript:;" link="a-false" role="button"><%- LANG('其他社区虚拟币用户领取UBTC申请') %></a>-->
+                <a href="others" link="a-true" role="button"><%- LANG('其他社区虚拟币用户领取UBTC申请') %></a>
+                <a role="button" :href="news[LAN]" target="_blank"><%- LANG('空投详情') %></a><br/><br/>
+                <a role="button" :href="Additional[LAN]" target="_blank"><%- LANG('补充信息和时间表') %></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#service_area',
+        data: function () {
+            return {
+                btcusercanclaim:false,
+                newsMap:{
+                    "en":"/news/detail?column=1&id=280",
+                    "cn":"/news/detail?column=1&id=281",
+                    "hk":"/news/detail?column=1&id=283",
+                    "kr":"/news/detail?column=1&id=280",
+                    "jp":"/news/detail?column=1&id=280"
+                },
+                news:{
+                    "en":"/news/detail?column=1&id=288",
+                    "cn":"/news/detail?column=1&id=294",
+                    "hk":"/news/detail?column=1&id=291",
+                    "kr":"/news/detail?column=1&id=290",
+                    "jp":"/news/detail?column=1&id=289"
+                },
+                Additional:{
+                    "en":"/news/detail?column=1&id=318",
+                    "cn":"/news/detail?column=1&id=319",
+                    "hk":"/news/detail?column=1&id=319",
+                    "kr":"/news/detail?column=1&id=318",
+                    "jp":"/news/detail?column=1&id=318"
+                }
+            }
+        },
+        methods : {
+            claimconfirm:function(){
+                var endtime=new Date('2018/2/14,12:00:00')
+                var nowtime=new Date();
+                if((endtime.getTime()-nowtime.getTime())/1000<=0)
+                {
+                    this.btcusercanclaim=false;
+
+                }
+                else
+                {
+                    this.btcusercanclaim=true;
+                }
+
+            }
+        },
+        created : function () {
+//            this.claimconfirm()
+        },
+        mounted : function () {
+        },
+        beforeCreate:function(){
+            if(!window.sessionStorage.getItem("mail"))
+            {
+                window.location="/user/login";
+            }
+
+        },
+    })
+</script>

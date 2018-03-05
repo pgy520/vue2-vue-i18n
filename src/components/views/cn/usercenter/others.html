@@ -1,0 +1,214 @@
+<link href="/src/styles/iview.css" rel="stylesheet" type="text/css">
+<link href="/src/styles/others.css" rel="stylesheet" type="text/css">
+<link href="/src/styles/Bomb.css" rel="stylesheet" type="text/css">
+<style>
+    @media screen and (max-width: 768px){
+        .user-center h1{
+            font-size:20px;
+        }
+        .btc-select .btc-select-title {
+            width: 120px;
+            font-size: 12px;
+        }
+        .money_address .money_title {
+            width: 120px;
+            font-size: 12px;
+        }
+        .user-center .button a {
+            font-size: 14px;
+            padding: 10px 20px;
+        }
+    }
+</style>
+<div class="user-center" id="claim_area">
+    <div class="container">
+        <h1><%- LANG('UBTC申领') %></h1>
+        <div class="btc-select">
+            <div class="btc-select-title"><%- LANG('选择币种') %></div>
+            <i-select @on-change="selbtchange" v-model="btkind" filterable not-found-text="<%- LANG('无匹配数据')%>" placeholder="<%- LANG('选择币种')%>">
+                <i-option v-for="(item,key) in moneykind" :value="item" :key="item">{{ key }}</i-option>
+            </i-select>
+        </div>
+        <div class="money_address">
+            <div class="money_title"><%- LANG('钱包地址') %></div>
+            <div class="btc-input">
+                <input type="text" placeholder="<%- LANG('钱包地址') %>" v-model="address">
+            </div>
+        </div>
+
+        <div class="button"><a role="button" @click="claims"><%- LANG('申领UBTC') %></a></div>
+    </div>
+</div>
+<script>
+    var app = new Vue({
+        el: '#claim_area',
+        data: function () {
+            this.$Message.config({
+                top: 180,
+                duration: 3
+            });
+
+            return {
+                bt:'',
+                btid:1,
+                btkind:'',
+                address: "",
+                moneykind:{
+                    HSR:10,
+                    QTUM:9,
+                    ETH:2,
+                    LTC:3,
+                     INK:15
+                }
+            }
+        },
+        methods: {
+            //切换币种
+            selbtchange:function(value){
+                var arrbt=this.moneykind
+                for(var o in arrbt)
+                {
+                    if(arrbt[o]==value)
+                    {
+                        this.bt=o;
+                        break;
+                    }
+                }
+                this.btid=value;
+
+
+            },
+            //默认币种
+            getDefaultcurrency:function(currency){
+                for(var o in currency)
+                {
+                    this.btkind=currency[o]
+                    this.bt=o
+                    break;
+                }
+            },
+            //获取币种种类
+            getMoneykind:function(){
+                var _this=this;
+                Methods.ajax({
+                    type:'POST',
+                    url:DOMAIN_MAIN + '/portals/currency/getcurrency',
+                    success:function(res){
+                        _this.moneykind=res.content;
+                    },
+                    error:function(err){
+                        _this.$Message.error(err.errorText)
+                    }
+                })
+            },
+        //    申领ubtc
+            claims:function(){
+                console.log('kind',this.btkind)
+                if(this.btkind=='')
+                {
+                    this.$Message.warning("<%- LANG('请选择币种类型')%>")
+                    return;
+                }
+                if(this.address=='')
+                {
+                    this.$Message.warning("<%- LANG('钱包地址有误')%>")
+                    return;
+                }
+                if(this.address.trim()!=='')
+                {
+                    var add=this.address.trim()
+                    var btkind=this.bt;
+                    switch(btkind){
+                        case 'HSR':
+                            if(add.length!==34||(add[0]!=='H' && add[0] !=='h'))
+                            {
+                                console.log(add.length)
+                                this.$Message.error(this.bt+UB.L("地址格式错误"));
+                                return;
+                            }
+                            break;
+                        case 'QUTM':
+                        case 'INK':
+                            if(add.length!==34||add[0]!=='Q')
+                            {
+                                this.$Message.error(this.bt+UB.L("地址格式错误"));
+                                return;
+                            }
+                            break;
+                        case 'ETH':
+                            if(add.length!==42||add[0]!=='0'||add[1]!=='x')
+                            {
+                                this.$Message.error(this.bt+UB.L("地址格式错误"));
+                                return;
+                            }
+                            break;
+                        case 'LTC':
+                            if(add.length!==34||(add[0]!=='L' && add[0]!=='M'  && add[0]!=='3'))
+                            {
+                                this.$Message.error(this.bt+UB.L("地址格式错误"));
+                                return;
+                            }
+                            break;
+                        default:break;
+                    }
+                }
+                var _this=this;
+                Methods.ajax({
+                    type: 'POST',
+                    data: {
+                        "currencyType":this.btkind,
+                        "address": this.address.trim()
+                    },
+                    url: DOMAIN_MAIN + '/portals/coinrecord/add',//userrecord/add',
+                    success: function(res){
+                        //                        alert("login success");
+                        window.sessionStorage.setItem("randomBtc", res.random);
+                        window.sessionStorage.setItem("btadd", _this.address.trim());
+                        window.sessionStorage.setItem("btkind", _this.bt);
+                        window.sessionStorage.setItem('btid',_this.btid)
+                        // window.location = "/u/othersValidation";
+                        window.location="/u/validateSelect"
+                    },
+                    error: function(res){
+                        if (res.code == 1) {
+                            _this.$Message.error(UB.L("登录失效,请重新登录"));
+                        }
+                        else if (res.code == 2) {
+                            window.sessionStorage.setItem('unactive',1)
+                            _this.$Message.error({
+                                content:UB.L("帐号未激活"),
+                                duration:1.5,
+                                onClose:function(){
+                                    window.location='/user/register'
+                                }
+                            })
+                        }
+                        else if (res.code == 3) {
+                            _this.$Message.error(UB.L("参数错误"));
+                        }
+                        else if (res.code == 4) {
+                            _this.$Message.error(_this.bt+UB.L("地址格式错误"));
+                        }
+                        else if (res.code == 6) {
+                            _this.$Message.error(_this.bt+UB.L("地址已存在"));
+                        }
+                    }
+                });
+            }
+
+        },
+        created: function () {
+        },
+        mounted:function(){
+            this.getDefaultcurrency(this.moneykind)
+            // this.getMoneykind()
+        },
+        beforeCreate:function(){
+            // if(!window.sessionStorage.getItem("mail"))
+            // {
+            //     window.location="/user/login";
+            // }
+
+        },
+    })
+</script>
